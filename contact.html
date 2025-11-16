@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Hamburger Menu & Booking Form</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind for custom colors and smooth transitions -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        // Deep blue for primary actions and branding
+                        'primary-blue': '#1e40af', 
+                        // Very light background color for the body (like slate-50)
+                        'secondary-gray': '#f8fafc', 
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Define the transition for the mobile menu */
+        .nav-menu-mobile {
+            transition: max-height 0.4s ease-in-out; /* Smooth vertical slide transition */
+            overflow: hidden; /* Hide content outside the max-height */
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        /* State when the menu is hidden (for the smooth transition) */
+        .h-0 {
+            max-height: 0;
+        }
+        /* State when the menu is shown (for the smooth transition) */
+        .h-full-menu {
+            /* A large value to ensure all content fits */
+            max-height: 500px; 
+        }
+        /* Styling the hamburger lines */
+        .hamburger-line {
+            display: block;
+            height: 2px;
+            width: 24px;
+            background-color: #374151; /* Dark gray */
+            border-radius: 9999px; /* Fully rounded */
+            transition: all 0.3s ease-in-out;
+        }
+        /* Transform the hamburger icon into an 'X' */
+        .hamburger-active .top-line {
+            transform: translateY(6px) rotate(45deg);
+        }
+        .hamburger-active .middle-line {
+            opacity: 0;
+        }
+        .hamburger-active .bottom-line {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+        /* Style for select dropdowns to hide default arrow and use custom styling */
+        select {
+            /* Custom SVG arrow, matching the gray color */
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3e%3cpath d='M7 7l3 3 3-3' stroke='%234B5563' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem center;
+            background-size: 1.5em 1.5em;
+        }
+    </style>
+</head>
+<body class="bg-secondary-gray min-h-screen font-sans">
+
+    <!-- Navigation Bar Container -->
+    <!-- The navbar is set to bg-white and sticky for consistent viewing -->
+    <nav class="bg-white shadow-xl sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+
+                <!-- Logo/Brand Name -->
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-2xl font-extrabold text-primary-blue tracking-wide transition duration-150 hover:text-blue-700">
+                        APEX <span class="text-gray-800">NAV</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Menu Links (Visible on screens >= sm) -->
+                <div class="hidden sm:ml-6 sm:flex sm:space-x-4 md:space-x-8 items-center">
+                    <a href="index.html" class="text-gray-600 hover:bg-primary-blue hover:text-white px-3 py-2 rounded-lg text-base font-medium transition duration-200">Home</a>
+                    <a href="elements.html" class="text-gray-600 hover:bg-primary-blue hover:text-white px-3 py-2 rounded-lg text-base font-medium transition duration-200">Services</a>
+                    <a href="generic.html" class="text-gray-600 hover:bg-primary-blue hover:text-white px-3 py-2 rounded-lg text-base font-medium transition duration-200">About Us</a>
+                    <!-- Contact button stands out -->
+                    <a href="#" class="text-white bg-primary-blue hover:bg-blue-700 px-4 py-2 rounded-lg text-base font-medium transition duration-200 shadow-md hover:shadow-lg transform hover:scale-[1.05]">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button (Hamburger - Hidden on screens >= sm) -->
+                <div class="sm:hidden">
+                    <button id="hamburger-button" type="button" class="inline-flex items-center justify-center p-2 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 focus:outline-none transition duration-150 ease-in-out" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <div class="flex flex-col space-y-1.5">
+                            <span class="hamburger-line top-line"></span>
+                            <span class="hamburger-line middle-line"></span>
+                            <span class="hamburger-line bottom-line"></span>
+                        </div>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Mobile Menu Panel (Hidden by default, shown via JS toggle) -->
+        <div id="mobile-menu" class="sm:hidden nav-menu-mobile h-0" role="menu" aria-orientation="vertical" aria-labelledby="hamburger-button">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-gray-50 border-t border-gray-200">
+                <a href="index.html" class="text-gray-700 hover:bg-gray-200 block px-3 py-2 rounded-lg text-base font-medium transition duration-200" role="menuitem">Home</a>
+                <a href="elements.html" class="text-gray-700 hover:bg-gray-200 block px-3 py-2 rounded-lg text-base font-medium transition duration-200" role="menuitem">Services</a>
+                <a href="generic.html" class="text-gray-700 hover:bg-gray-200 block px-3 py-2 rounded-lg text-base font-medium transition duration-200" role="menuitem">About Us</a>
+                <a href="contact" class="text-white bg-primary-blue hover:bg-blue-700 block px-3 py-2 rounded-lg text-base font-medium transition duration-200 shadow-md" role="menuitem">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content: Session Booking Form -->
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <div class="bg-white p-6 md:p-10 rounded-xl shadow-2xl">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">Book Your Session</h1>
+            <p class="text-gray-500 mb-8">Please provide your details to help us customize your training experience.</p>
+
+            <form id="session-booking-form" class="space-y-8">
+                
+                <!-- Hidden fields to store YOUR contact info for use in JS -->
+                <input type="hidden" id="my-whatsapp" value="+2349011211609">
+                <input type="hidden" id="my-email" value="kelsonspencer22@gmail.com">
+
+
+                <!-- Section 1: Personal & Contact Information -->
+                <fieldset class="border-t border-gray-200 pt-6">
+                    <legend class="text-xl font-semibold text-primary-blue mb-6">1. Personal & Contact Information</legend>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- WhatsApp Number -->
+                        <div>
+                            <label for="whatsapp-number" class="block text-sm font-medium text-gray-700">WhatsApp Number (Required)</label>
+                            <input type="tel" id="whatsapp-number" name="whatsapp-number" required placeholder="e.g., +123 456 7890" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:border-primary-blue focus:ring-primary-blue transition">
+                        </div>
+                        <!-- Phone Number -->
+                        <div>
+                            <label for="phone-number" class="block text-sm font-medium text-gray-700">Phone Number (Optional)</label>
+                            <input type="tel" id="phone-number" name="phone-number" placeholder="e.g., +123 456 7890" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:border-primary-blue focus:ring-primary-blue transition">
+                        </div>
+                    </div>
+
+                    <!-- Age Field -->
+                    <div class="mt-6">
+                        <label for="age" class="block text-sm font-medium text-gray-700">Age (Required, especially for kids)</label>
+                        <input type="number" id="age" name="age" min="1" max="100" required placeholder="Enter age in years" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:border-primary-blue focus:ring-primary-blue transition">
+                    </div>
+                </fieldset>
+
+                <!-- Section 2: Training Preferences -->
+                <fieldset class="border-t border-gray-200 pt-6">
+                    <legend class="text-xl font-semibold text-primary-blue mb-6">2. Training Goals & Experience</legend>
+
+                    <!-- Training Goal -->
+                    <div>
+                        <label for="training-goal" class="block text-sm font-medium text-gray-700">Primary Training Goal (Required)</label>
+                        <textarea id="training-goal" name="training-goal" rows="3" required placeholder="e.g., improve fitness, learn a new skill, competitive preparation, general well-being..." class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:border-primary-blue focus:ring-primary-blue transition"></textarea>
+                    </div>
+
+                    <!-- Experience Level -->
+                    <div class="mt-6">
+                        <label for="experience-level" class="block text-sm font-medium text-gray-700">Experience Level (Required)</label>
+                        <select id="experience-level" name="experience-level" required class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:border-primary-blue focus:ring-primary-blue transition appearance-none pr-8">
+                            <option value="" disabled selected>Select your current level</option>
+                            <option value="beginner">Beginner (No prior experience)</option>
+                            <option value="novice">Novice (Some basic knowledge/attended a few sessions)</option>
+                            <option value="intermediate">Intermediate (Regularly train, solid foundation)</option>
+                            <option value="advanced">Advanced (Experienced, competitive focus)</option>
+                        </select>
+                    </div>
+
+                    <!-- Session Type -->
+                    <div class="mt-6">
+                        <span class="text-sm font-medium text-gray-700">Preferred Session Type (Required)</span>
+                        <div class="mt-2 flex space-x-6">
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="session-type" value="private" required class="form-radio h-4 w-4 text-primary-blue border-gray-300 focus:ring-primary-blue">
+                                <span class="ml-2 text-gray-700">Private (1-on-1)</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="session-type" value="group" class="form-radio h-4 w-4 text-primary-blue border-gray-300 focus:ring-primary-blue">
+                                <span class="ml-2 text-gray-700">Group</span>
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Section 3: Scheduling & Communication -->
+                <fieldset class="border-t border-gray-200 pt-6">
+                    <legend class="text-xl font-semibold text-primary-blue mb-6">3. Availability & Communication</legend>
+
+                    <!-- Preferred Training Days/Time -->
+                    <div>
+                        <label for="preferred-time" class="block text-sm font-medium text-gray-700">Preferred Training Days and Time (Required)</label>
+                        <textarea id="preferred-time" name="preferred-time" rows="3" required placeholder="e.g., Weekdays after 5 PM, Saturday mornings, etc." class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:border-primary-blue focus:ring-primary-blue transition"></textarea>
+                    </div>
+
+                    <!-- Preferred Communication Method -->
+                    <div class="mt-6" id="comm-method-group">
+                        <span class="text-sm font-medium text-gray-700 block mb-2">Preferred Method of Communication After Booking</span>
+                        <p class="text-xs text-gray-400 mb-3">This helps us coordinate your session quickly and effectively.</p>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <!-- WhatsApp Option -->
+                            <label class="flex items-start p-4 border-2 border-primary-blue bg-primary-blue/5 rounded-lg cursor-pointer hover:shadow-lg transition duration-150" id="label-whatsapp">
+                                <input type="radio" name="comm-method" value="whatsapp" id="comm-whatsapp" checked class="mt-1.5 h-5 w-5 text-primary-blue border-gray-300 focus:ring-primary-blue">
+                                <span class="ml-3">
+                                    <span class="block font-semibold text-gray-700">WhatsApp (Primary)</span>
+                                    <!-- Contact details kept hidden as requested -->
+                                    <span class="block text-xs text-green-600 font-medium" id="contact-whatsapp"></span>
+                                </span>
+                            </label>
+                            <!-- Email Option -->
+                            <label class="flex items-start p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition duration-150" id="label-email">
+                                <input type="radio" name="comm-method" value="email" id="comm-email" class="mt-1.5 h-5 w-5 text-primary-blue border-gray-300 focus:ring-primary-blue">
+                                <span class="ml-3">
+                                    <span class="block font-semibold text-gray-700">Email (Secondary)</span>
+                                    <!-- Contact details kept hidden as requested -->
+                                    <span class="block text-xs text-gray-600 font-medium" id="contact-email"></span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <!-- Section 4: Notes -->
+                <fieldset class="border-t border-gray-200 pt-6">
+                    <legend class="text-xl font-semibold text-primary-blue mb-6">4. Additional Notes</legend>
+
+                    <!-- Additional Notes/Questions -->
+                    <div>
+                        <label for="additional-notes" class="block text-sm font-medium text-gray-700">Additional Notes or Questions</label>
+                        <textarea id="additional-notes" name="additional-notes" rows="4" placeholder="Is there anything else we should know before your session?" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:border-primary-blue focus:ring-primary-blue transition"></textarea>
+                    </div>
+                </fieldset>
+
+                <!-- Submit Button -->
+                <div class="pt-2">
+                    <button type="submit" id="submit-button" class="w-full py-3 px-4 border border-transparent rounded-lg shadow-xl text-lg font-medium text-white bg-primary-blue hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-blue transition duration-300 ease-in-out transform hover:scale-[1.01]">
+                        Submit via WhatsApp
+                    </button>
+                    <!-- Submission Confirmation Message -->
+                    <div id="submission-message" class="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg hidden" role="alert">
+                        <p class="font-semibold">Success!</p>
+                        <p>Your booking request has been submitted. We will contact you shortly via your preferred communication method to confirm the details.</p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const button = document.getElementById('hamburger-button');
+            const menu = document.getElementById('mobile-menu');
+            const form = document.getElementById('session-booking-form');
+            const message = document.getElementById('submission-message');
+            
+            const commRadios = document.querySelectorAll('input[name="comm-method"]');
+            const submitButton = document.getElementById('submit-button');
+
+            // Log error if required elements are missing
+            if (!button || !menu || !form || !message || !submitButton) {
+                console.error('One or more required elements not found. Cannot initialize app logic.');
+                return;
+            }
+
+            // ----------------------------------------------------
+            // 1. Mobile Menu Toggle Logic
+            // ----------------------------------------------------
+            button.addEventListener('click', () => {
+                const isExpanded = menu.classList.toggle('h-full-menu');
+                menu.classList.toggle('h-0', !isExpanded);
+                button.classList.toggle('hamburger-active', isExpanded);
+                button.setAttribute('aria-expanded', isExpanded);
+            });
+
+
+            // ----------------------------------------------------
+            // 2. Dynamic Submit Button Text and Radio Styling
+            // ----------------------------------------------------
+            const updateSubmitButtonText = () => {
+                const selectedRadio = document.querySelector('input[name="comm-method"]:checked');
+                
+                // Get references to labels
+                const labelWhatsapp = document.getElementById('label-whatsapp');
+                const labelEmail = document.getElementById('label-email');
+                
+                // Reset styles
+                [labelWhatsapp, labelEmail].forEach(label => {
+                    label.classList.remove('border-2', 'border-primary-blue', 'bg-primary-blue/5');
+                    label.classList.add('border', 'border-gray-300', 'hover:bg-gray-50');
+                });
+
+                if (selectedRadio) {
+                    const method = selectedRadio.value;
+                    const text = method.charAt(0).toUpperCase() + method.slice(1);
+                    submitButton.textContent = `Submit via ${text}`;
+                    
+                    // Apply selected style to the active label
+                    const activeLabel = document.getElementById(`label-${method}`);
+                    if (activeLabel) {
+                        activeLabel.classList.add('border-2', 'border-primary-blue', 'bg-primary-blue/5');
+                        activeLabel.classList.remove('border', 'border-gray-300', 'hover:bg-gray-50');
+                    }
+                }
+            }
+
+            // Set initial state and listeners
+            updateSubmitButtonText();
+            commRadios.forEach(radio => {
+                radio.addEventListener('change', updateSubmitButtonText);
+            });
+
+
+            // ----------------------------------------------------
+            // 3. Form Submission Logic (Logs to console)
+            // ----------------------------------------------------
+            form.addEventListener('submit', (event) => {
+                event.preventDefault(); // Prevent default form submission
+
+                // Collect Form Data
+                const formData = new FormData(form);
+                const data = {};
+                for (let [key, value] of formData.entries()) {
+                    data[key] = value;
+                }
+                
+                // Highlight important information for the user in the console
+                console.log("--- Session Booking Data Submitted ---");
+                console.log("Submission successful. You would typically send this data to a server or email API.");
+                console.log("Customer Preferred Contact:", data['comm-method'].toUpperCase());
+                console.log("Full Submission Data:", data);
+                console.log("--------------------------------------");
+
+                // Display Success Message
+                message.classList.remove('hidden');
+                form.reset(); // Clear the form fields after submission
+
+                // Reset button text and selected radio state after form reset
+                document.getElementById('comm-whatsapp').checked = true;
+                updateSubmitButtonText(); 
+
+                // Optional: Hide message after a few seconds
+                setTimeout(() => {
+                    message.classList.add('hidden');
+                }, 5000); 
+            });
+        });
+    </script>
+
+</body>
+</html>

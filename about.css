@@ -1,0 +1,1027 @@
+@import url(fontawesome-all.min.css);
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,600italic,800,800italic");
+
+
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Poppings, sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+
+@media screen and (max-width:430px) {
+    * {
+        font-size: 4px;
+    }
+}
+
+
+
+
+@-ms-viewport {
+    width: device-width;
+}
+
+.navbar {
+    width: 100%;
+    height: 10vh;
+    background: rgba(208, 208, 218, 0.3);
+    display: flex;
+    align-items: center;
+    z-index: 99999888;
+}
+
+
+
+@media screen and (max-width:430px) {
+    .navbar {
+        width: 100%;
+        height: 60px;
+    }
+}
+
+
+
+
+.navbar-shadow {
+    width: 100%;
+    height: 20px;
+    background-color: rgb(139, 130, 130);
+    filter: blur(20px);
+    position: absolute;
+    top: 10%;
+}
+
+@media screen and (max-width:430px) {
+
+    .navbar-shadow {
+        width: 100%;
+        height: 10px;
+    }
+}
+
+
+
+
+#back-btn {
+    width: 70px;
+    height: 30px;
+    border-radius: 30px;
+    border: 2px solid #222629;
+
+    font-family: sans-serif;
+    font-weight: bold;
+    color: #222629;
+    position: absolute;
+    right: 2%;
+    top: 3%;
+    transition: all 0.2s ease-in-out;
+}
+
+
+@media screen and (max-width:430px) {
+    #back-btn {
+        font-size: 15px;
+        position: absolute;
+        top: 2%;
+    }
+}
+
+#back-btn:active {
+    transform: scale(0.9);
+}
+
+
+/*The section that contains the image and text concerned about coach spencer*/
+
+.first-section {
+    width: 100%;
+    height: 90vh;
+    background: rgb(201, 198, 198);
+    display: flex;
+}
+
+@media screen and (max-width:736px) {
+
+    .first-section {
+        display: block;
+    }
+}
+
+.first-section .about-me {
+    width: 45%;
+    height: 90vh;
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+@media screen and (max-width:430px) {
+
+    .first-section .about-me {
+        display: block;
+
+    }
+}
+
+.about-me-main {
+    position: absolute;
+    top: 30%;
+
+}
+
+@media screen and (max-width:430px) {
+
+    .about-me-main {
+        position: absolute;
+        top: 15%;
+        left: 2%;
+    }
+}
+
+
+.my-name {
+    font-size: 40px;
+    font-weight: bold;
+    color: #252b30;
+}
+
+@media screen and (max-width:430px) {
+    .my-name {
+        font-size: 45px;
+    }
+}
+
+
+
+.my-level {
+    font-weight: bold;
+    font-size: 20px;
+    color: #252b30;
+}
+
+@media screen and (max-width:430px) {
+    .my-level {
+        font-size: 17px;
+    }
+}
+
+.small-me-text {
+    padding-top: 30px;
+    color: #252b30;
+}
+
+@media screen and (max-width:430px) {
+    .small-me-text {
+        font-size: 19px;
+        position: absolute;
+        top: 100%;
+    }
+}
+
+
+.circle-container {
+    width: 45%;
+    height: 150px;
+    background-color: #252b30;
+    position: absolute;
+    border-radius: 30px;
+    backdrop-filter: blur(35px);
+    top: 60%;
+    left: 5px;
+    gap: 20px;
+
+    display: inline-flex;
+    align-items: center;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+
+}
+
+@media screen and (max-width:430px) {
+    .circle-container {
+        width: 100%;
+        position: absolute;
+        left: 0%;
+        top: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+}
+
+
+.circle-one,
+.cirlce-two,
+.circle-three,
+.circle-four {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: rgba(141, 139, 139, 0.3);
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.5);
+    margin-left: 3px;
+    text-align: center;
+    font-family: sans-serif;
+    font-weight: lighter;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    transition: all 0.2s ease-in-out;
+}
+
+@media screen and (max-width:430px) {
+
+    .circle-one,
+    .cirlce-two,
+    .circle-three,
+    .circle-four {
+        width: 80px;
+        height: 80px;
+        border-radius: 30%;
+    }
+}
+
+
+.circle-one:hover,
+.cirlce-two:hover,
+.circle-three:hover,
+.circle-four:hover {
+    transform: scale(0.9);
+    background-color: white;
+    color: rgb(34, 34, 39);
+    font-weight: bold;
+    font-family: sans-serif;
+    letter-spacing: 2px;
+
+}
+
+.
+
+
+
+
+
+
+.first-section .about-image {
+    width: 55%;
+    height: 90vh;
+    color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 900000000;
+}
+
+@media screen and (max-width:430px) {
+    .first-section .about-image {
+        display: none;
+    }
+}
+
+
+.first-section #image-main {
+    width: 350px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 30px;
+    z-index: 1;
+    box-shadow: 0 30px 10px rgba(0, 0, 0, 0.5);
+}
+
+@media screen and (max-width:430px) {
+    .first-section #image-main {
+        display: none;
+    }
+}
+
+
+
+#image-main {
+    z-index: 90000;
+}
+
+
+@media screen and (max-width:430px) {
+    #image-main {
+        display: none;
+    }
+}
+
+
+
+
+
+.corner-lightbox {
+    width: 380px;
+    height: 430px;
+    position: absolute;
+    top: 12.97%;
+    left: 55%;
+    z-index: -3;
+    border-radius: 30px;
+}
+
+
+@media screen and (max-width:430px) {
+    .corner-lightbox {
+        display: none;
+    }
+}
+
+
+.corner-lightmover {
+    width: 20px;
+    height: 60px;
+    background-color: rgb(214, 214, 214);
+    position: relative;
+    border-radius: 30px;
+}
+
+@media screen and (max-width:430px) {
+    .corner-lightmover {
+        display: none;
+    }
+}
+
+.corner-lightbox-two {
+    width: 370px;
+    height: 410px;
+    border-radius: 30px;
+    background-color: #252b30;
+    position: absolute;
+    z-index: -1;
+    top: 15%;
+    right: 16.99999%
+}
+
+@media screen and (max-width:430px) {
+    .corner-lightbox-two {
+        display: none;
+    }
+}
+
+
+/*SECTION TW0*/
+
+
+.section-two {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+
+}
+
+@media screen and (max-width:430px) {
+    .section-two {
+        display: block;
+    }
+}
+
+.section-about-text {
+    min-width: 60%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #252b30;
+}
+
+@media screen and (max-width:430px) {
+    .section-about-text {
+        display: block;
+        position: absolute;
+        width: 100%;
+        height
+    }
+}
+
+.section-two-text-container {
+    width: 90%;
+    height: 60vh;
+    margin-left: 50px
+}
+
+
+
+
+.section-image {
+    min-width: 40%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 40000;
+    border-top-right-radius: 20px;
+
+}
+
+@media screen and (max-width:430px) {
+    .section-image {
+        height: 80vh;
+    }
+}
+
+
+
+.image-shadow-block {
+    width: 350px;
+    height: 450px;
+
+    background-color: #2d3338;
+    border-radius: 40px;
+
+    position: absolute;
+    z-index: -1;
+    filter: blur(25px);
+
+}
+
+#section-two-image {
+    width: 300px;
+    height: 400px;
+    border-radius: 10px;
+}
+
+
+
+
+
+/*About section two description*/
+
+.About-me-btn {
+    width: 120px;
+    height: 40px;
+
+    background-color: #2d3338;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: rgb(224, 221, 221);
+    font-family: sans-serif;
+    font-weight: 900;
+
+    border-radius: 6px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+
+}
+
+@media screen and (max-width:430px) {
+    .About-me-btn {
+        width: 170px;
+        height: 50px;
+        position: absolute;
+        left: 0%;
+    }
+}
+
+@media screen and (max-width:430px) {
+    .about-me-heading {
+        font-size: 20px;
+    }
+}
+
+
+.about-me-h2 {
+    padding-top: 20px;
+    font-size: 30px;
+    font-family: sans-serif;
+    color: rgb(184, 184, 183)
+}
+
+@media screen and (max-width:430px) {
+    .about-me-h2 {
+        font-size: 19px;
+        padding-top: 20%;
+        position: absolute;
+        left: 5%;
+    }
+}
+
+.about-me-p {
+    padding-top: 20px;
+    font-size: 17px;
+    color: rgb(174, 174, 179);
+    font-family: sans-serif;
+    font-weight: 200px;
+
+}
+
+@media screen and (max-width:430px) {
+    .about-me-p {
+        font-size: 14px;
+        padding-top: 20%;
+        position: absolute;
+        top: 4%;
+        left: 5%;
+        color: azure;
+        font-family: Poppins sans-serif;
+    }
+
+    .about-me-p br {
+        display: none;
+    }
+
+    .about-me-last-text {
+        position: absolute;
+    }
+}
+
+.about-me-last-text {
+    position: absolute;
+    color: whitesmoke;
+    position:
+}
+
+
+
+
+
+
+/*SECTION-THREE*/
+
+.section-three {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+}
+
+@media screen and (max-width:430px) {
+    .section-three {
+        display: block;
+    }
+}
+
+/*For the h2(My tennis skill) which the position has being
+configured due to the viewport of a particular screen*/
+
+#My-tennis-Skills {
+    color: rgb(84, 84, 87);
+    position: absolute;
+    top: 215%;
+    font-family: sans-serif;
+    font-size: 35px;
+}
+
+@media screen and (max-width:430px) {
+    #My-tennis-skills {
+        position: absolute;
+        top: 100%;
+    }
+}
+
+
+.spotlight-container {
+    width: 100%;
+    height: 100vh;
+    filter: opacity(23px);
+}
+
+
+.spotlight-one {
+    width: 350px;
+    height: 250px;
+    background-color: whitesmoke;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+
+
+}
+
+.spotlight-two {
+    width: 350px;
+    height: 250px;
+    background-color: whitesmoke;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.spotlight-three {
+    width: 350px;
+    height: 250px;
+    background-color: whitesmoke;
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.spotlight-four {
+    width: 350px;
+    height: 250px;
+    background-color: whitesmoke;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+
+.section-three-design {
+    width: 100%;
+    height: 30vh;
+    background-color: rgb(196, 196, 201);
+    position: absolute;
+    z-index: -1;
+    margin: 10px auto;
+}
+
+.spotlight-one,
+h3 {
+    color: rgb(60, 60, 65);
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+
+.spotlight-three,
+h3,
+.spotlight-two,
+h3,
+.spotlight-four,
+h3 {
+
+    color: rgb(60, 60, 65);
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+
+
+
+.spotlight-one,
+.skill-text,
+.spotlight-two,
+.skill-text,
+.spotlight-three,
+.skill-text,
+.spotlight-four .skill-text {
+    text-align: center;
+
+}
+
+/*section-four*/
+
+.section-four {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+
+.experience-container {
+    width: 100%;
+    height: 110vh;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.experience-one,
+.experience-two,
+.experience-three {
+    width: 400px;
+    height: 100vh;
+    background-color: #252b30;
+    border-radius: 30px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+}
+
+.experience-two {
+    background-color: white;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+
+}
+
+/*experience-images*/
+
+#exp-one {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    border-radius: 30px;
+}
+
+#exp-two {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    border-radius: 30px;
+}
+
+#exp-three {
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    border-radius: 30px;
+
+}
+
+/*SECTION-FIVE*/
+
+#section-five {
+    width: 100%;
+    height: 100vh;
+
+
+    display: flex;
+}
+
+.section-five-container {
+    width: 100%;
+    height: 100vh;
+    display: inline-flex;
+}
+
+.divine-one {
+    width: 350px;
+    height: 50%;
+    background-color: whitesmoke;
+
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+
+.divine-two {
+    width: 350px;
+    height: 50%;
+    background-color: whitesmoke;
+    border-radius: 30px;
+    margin-top: 23.5%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.divine-three {
+    width: 350px;
+    height: 50%;
+    background-color: whitesmoke;
+
+
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.divine-four {
+    width: 350px;
+    height: 50%;
+    background-color: whitesmoke;
+
+    border-radius: 30px;
+    margin-top: 23.5%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+
+.one-circle,
+.two-circle,
+.three-circle,
+.four-circle {
+    width: 120px;
+    height: 120px;
+    border: 2px solid #252b30;
+    border-radius: 50%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: sans-serif;
+    font-weight: bolder;
+    color: #3e4449;
+}
+
+
+/*OUR-MISSION-VISION*/
+
+#section-six {
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(214, 207, 207);
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+
+#section-six #section-six-heading {
+    position: absolute;
+    top: 525%;
+    font-size: 25px;
+    font-family: sans-serif;
+    font-weight: bold;
+    color: #373f46;
+    padding-right: 20px;
+}
+
+.mission-box-one {
+    width: 350px;
+    height: 350px;
+    background-color: #252b30;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    margin-top: 10%;
+}
+
+.mission-box-one h2 {
+    font-size: 23px;
+    font-family: sans-serif;
+    font-weight: bold;
+    position: absolute;
+    top: 561%;
+    padding-left: 15px;
+    color: whitesmoke;
+}
+
+.mission-box-one p {
+    color: whitesmoke;
+    font-size: 16px;
+    padding-left: 15px;
+}
+
+.mission-box-one p {
+    padding-top: 150px;
+}
+
+
+.mission-box-two h2 {
+    font-size: 23px;
+    font-family: sans-serif;
+    font-weight: bold;
+    position: absolute;
+    top: 561%;
+
+    color: whitesmoke;
+
+
+}
+
+.mission-box-two {
+    width: 350px;
+    height: 350px;
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+    margin-top: 10%;
+    background-color: rgb(194, 189, 189);
+}
+
+.mission-box-two p {
+    color: #252b30;
+    font-size: q16px;
+    padding-top: 150px;
+    padding-left: 15px;
+    font-weight: 500;
+
+
+}
+
+#section-seven {
+    width: 100%;
+    height: 50vh;
+
+    display: inline-flex;
+    flex-direction: row;
+    object-fit: cover;
+}
+
+#img-seven {
+    width: 230000%;
+    object-fit: cover;
+    filter: brightness(0.5);
+}
+
+@media screen and (max-width:736px) {
+    #img-seven {
+        width: 100%;
+    }
+}
+
+.seven-text {
+    width: 60%;
+    height: 50vh;
+
+}
+
+.seven-button {
+    width: 40%;
+    height: 50vh;
+}
+
+.seven-text-container {
+    width: 540px;
+    height: 30vh;
+    background-color: transparent;
+    position: absolute;
+    top: 625%;
+    left: 20%;
+}
+
+.seven-text h2 {
+    font-family: sans-serif;
+    letter-spacing: 3.5px;
+    padding-bottom: 30px;
+    color: whitesmoke;
+}
+
+
+
+.seven-text p {
+    font-family: sans-serif;
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    color: whitesmoke;
+    line-height: 30px;
+}
+
+.seven-button ul li {
+    list-style: none;
+}
+
+
+
+
+.button-container {
+    position: absolute;
+    top: 630%;
+    right: 20%;
+}
+
+
+
+#session-btn {
+    width: 250px;
+    height: 40px;
+    background-color: rgb(48, 226, 4);
+    border: transparent;
+    font-family: sans-serif;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 1.5px;
+
+    transition: all 0.2s ease-in-out;
+}
+
+#session-btn:hover {
+    background-color: #000000;
+    color: whitesmoke;
+    border-radius: 10px;
+}
+
+#learnmore-btn {
+    width: 220px;
+    height: 42px;
+
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+    position: absolute;
+
+    margin-left: 13.5px;
+}

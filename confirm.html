@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmed</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="confirmationCard" class="bg-white p-8 sm:p-12 rounded-2xl shadow-xl w-full max-w-lg mx-4 text-center border-t-8">
+        
+        <!-- Icon and Dynamic Title Area -->
+        <div id="statusIcon" class="mx-auto h-16 w-16 mb-6 rounded-full flex items-center justify-center">
+            <!-- Icon will be set dynamically -->
+        </div>
+
+        <h1 id="mainTitle" class="text-3xl font-bold mb-4 text-gray-900"></h1>
+        
+        <p id="messageBody" class="text-lg text-gray-600 mb-8 leading-relaxed"></p>
+
+        <hr class="border-gray-200 mb-8">
+
+        <!-- Fixed Next Steps Section -->
+        <div class="text-left">
+            <h2 class="text-xl font-semibold text-gray-800 mb-4">What Happens Next?</h2>
+            
+            <ul class="space-y-4 text-gray-700">
+                <li class="flex items-start">
+                    <span class="text-green-500 mr-3 mt-1">&#10003;</span>
+                    <p>We've reserved your time slot: You are now secured for your **Apex Coaching** session.</p>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-green-500 mr-3 mt-1">&#10003;</span>
+                    <p>Check your inbox: The final **video meeting link** and a short preparation guide will be sent to your email address.</p>
+                </li>
+                <li class="flex items-start">
+                    <span class="text-red-500 mr-3 mt-1">&#9888;</span>
+                    <p>Questions? If you do not receive the final meeting email within 2 hours, please reply to our last message or email us at <a href="mailto:support@apexcoaching.com" class="text-indigo-600 hover:text-indigo-700 font-medium">support@apexcoaching.com</a>.</p>
+                </li>
+            </ul>
+        </div>
+
+        <p class="mt-10 text-sm text-gray-500">Thank you for choosing Apex Coaching. We look forward to meeting you!</p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const paymentMethod = params.get('method');
+
+            const card = document.getElementById('confirmationCard');
+            const iconContainer = document.getElementById('statusIcon');
+            const title = document.getElementById('mainTitle');
+            const messageBody = document.getElementById('messageBody');
+
+            if (paymentMethod === 'bank' || paymentMethod === 'palmpay') {
+                // --- BANK TRANSFER/PALMPAY MESSAGE ---
+                card.classList.add('border-yellow-500');
+                iconContainer.classList.add('bg-yellow-100');
+                iconContainer.innerHTML = `<svg class="w-10 h-10 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.332 16c-.77 1.333.192 3 1.732 3z"></path></svg>`;
+                title.textContent = 'Booking Reserved: Awaiting Transfer Confirmation';
+                messageBody.innerHTML = `Your booking slot is secure! We have received your email with the Palmpay/Bank Transfer receipt. **We are manually verifying the transaction now.** You will receive your final meeting link email within the next 1–2 hours.`;
+            } else {
+                // --- PAYMENT LINK SUCCESS MESSAGE (Default) ---
+                card.classList.add('border-green-500');
+                iconContainer.classList.add('bg-green-100');
+                iconContainer.innerHTML = `<svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+                title.textContent = 'Payment Complete! You’re All Set.';
+                messageBody.innerHTML = `Congratulations! Your payment has been successfully processed by our secure gateway. Your booking is confirmed, and your dedicated time slot is locked in. Please check your email for the final meeting link.`;
+            }
+        });
+    </script>
+</body>
+</html>

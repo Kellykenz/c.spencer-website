@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Session | Apex Coaching</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Styles for Aesthetics and Focus */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f7; 
+        }
+        .booking-card {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        @media (min-width: 768px) {
+            .booking-card {
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+        }
+        
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #f97316; /* Orange focus for 'Bookings' vibe */
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.3); 
+            outline: none;
+        }
+        .submit-button {
+            transition: all 0.3s ease;
+        }
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        /* Styling the dropdown arrow */
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='currentColor'%3e%3cpath d='M7 7l3-3 3 3m0 6l-3 3-3-3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1.5em 1.5em;
+        }
+
+        /* Styles for the custom message box */
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 50;
+        }
+    </style>
+</head>
+<body class="overflow-x-hidden">
+
+    <!-- Custom Modal/Message Box for feedback -->
+    <div id="messageBox" class="message-box hidden bg-white rounded-lg p-6 shadow-xl max-w-sm w-11/12 border-t-4 border-orange-500 transition-opacity duration-300">
+        <h3 class="text-xl font-bold text-gray-800 mb-3" id="messageTitle">Booking Request Sent!</h3>
+        <p class="text-gray-600 mb-4" id="messageBody">We've compiled your booking details and are opening your selected app. Please send the pre-filled message!</p>
+        <button onclick="document.getElementById('messageBox').classList.add('hidden')" class="w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition">Close</button>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto py-6 sm:py-12 px-4 sm:px-6 lg:px-8">
+        <header class="text-center mb-8 md:mb-12">
+            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900">Book and Confirm Your Session</h1>
+            <p class="mt-2 sm:mt-3 text-lg sm:text-xl text-gray-500 max-w-3xl mx-auto">
+                Please provide all necessary details for accurate scheduling and invoicing.
+            </p>
+        </header>
+
+        <!-- Main Booking Card Container -->
+        <div class="booking-card bg-white rounded-2xl overflow-hidden md:flex">
+            
+            <!-- Left Side: Booking Form -->
+            <div class="w-full md:w-1/2 p-6 sm:p-8 lg:p-12">
+                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">Request Your Time Slot</h2>
+                
+                <form id="bookingForm" class="space-y-5 sm:space-y-6"> 
+                    
+                    <!-- Row 1: Name and Email -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <input 
+                                type="text" 
+                                name="name" 
+                                id="name" 
+                                placeholder="Your Full Name"
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900"
+                            >
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                            <input 
+                                type="email" 
+                                name="email" 
+                                id="email" 
+                                placeholder="name@example.com"
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900"
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Service Selection -->
+                    <div>
+                        <label for="service" class="block text-sm font-medium text-gray-700 mb-1">Select Service</label>
+                        <select 
+                            id="service" 
+                            name="service" 
+                            required
+                            class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700"
+                        >
+                            <option value="" disabled selected>Choose a Coaching Pathway...</option>
+                            <option value="Foundation Pathway ($199)">Foundation Pathway ($199)</option>
+                            <option value="Championship Pathway ($499)">Championship Pathway ($499)</option>
+                            <option value="Corporate Leadership Coaching (Quote)">Corporate Leadership Coaching (Quote)</option>
+                            <option value="Quick Consultation ($50)">Quick 30-min Consultation ($50)</option>
+                        </select>
+                    </div>
+
+                    <h3 class="text-lg font-bold text-gray-800 pt-3">Location & Time Preference</h3>
+
+                    <!-- Row 3: Preferred Date, Time, and Time Zone -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div>
+                            <label for="preferredDate" class="block text-sm font-medium text-gray-700 mb-1">Preferred Date</label>
+                            <input 
+                                type="date" 
+                                name="preferredDate" 
+                                id="preferredDate" 
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-700"
+                            >
+                        </div>
+                        <div>
+                            <label for="preferredTime" class="block text-sm font-medium text-gray-700 mb-1">Preferred Time</label>
+                            <input 
+                                type="time" 
+                                name="preferredTime" 
+                                id="preferredTime" 
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-700"
+                            >
+                        </div>
+                         <div>
+                            <label for="timeZone" class="block text-sm font-medium text-gray-700 mb-1">Your Time Zone</label>
+                            <input 
+                                type="text" 
+                                name="timeZone" 
+                                id="timeZone" 
+                                placeholder="e.g., EST, GMT+1, CST"
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-700"
+                            >
+                        </div>
+                    </div>
+                    
+                    <!-- Row 4: Country and Currency -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label for="clientCountry" class="block text-sm font-medium text-gray-700 mb-1">Your Country/Location</label>
+                            <input 
+                                type="text" 
+                                name="clientCountry" 
+                                id="clientCountry" 
+                                placeholder="e.g., Canada, Nigeria"
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-700"
+                            >
+                        </div>
+                        <div>
+                            <label for="paymentCurrency" class="block text-sm font-medium text-gray-700 mb-1">Preferred Payment Currency</label>
+                            <input 
+                                type="text" 
+                                name="paymentCurrency" 
+                                id="paymentCurrency" 
+                                placeholder="e.g., USD, EUR, GBP, CAD"
+                                required
+                                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-700"
+                            >
+                        </div>
+                    </div>
+
+
+                    <!-- Terms and Conditions Checkbox -->
+                    <div class="pt-2">
+                        <label class="flex items-center text-sm font-medium text-gray-700 cursor-pointer">
+                            <input type="checkbox" id="agreeTerms" name="agreeTerms" required class="h-4 w-4 text-orange-600 border-gray-300 rounded focus:ring-orange-500">
+                            <span class="ml-2">I have read and agree to the <a href="#" class="text-orange-600 hover:underline font-semibold" onclick="showTerms(event)">Payment & Cancellation Policy</a>.</span>
+                        </label>
+                    </div>
+
+                    <!-- Button Group for Email and WhatsApp -->
+                    <div class="space-y-4 pt-4">
+                        <p class="text-sm font-semibold text-gray-700">Final Step: Choose your preferred booking channel:</p>
+                        
+                        <!-- Email Button -->
+                        <button 
+                            type="button" 
+                            onclick="handleSubmission(event)" 
+                            class="submit-button w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-lg font-semibold text-white bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:ring-orange-500 focus:ring-opacity-50"
+                        >
+                            Book & Confirm via Email
+                        </button>
+
+                        <!-- WhatsApp Button -->
+                        <button 
+                            type="button" 
+                            onclick="handleWhatsAppSubmission(event)" 
+                            class="submit-button w-full flex items-center justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-lg font-semibold text-white bg-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:ring-emerald-500 focus:ring-opacity-50"
+                        >
+                            <!-- Simple Chat Icon -->
+                            <svg class="h-6 w-6 mr-3 fill-current text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 12C21 16.9706 16.9706 21 12 21C10.6698 21 9.38222 20.7397 8.1963 20.2458L3 21L3.75424 15.8037C3.26027 14.6178 3 13.3302 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Book & Confirm via WhatsApp
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Side: Details, Payment & Cancellation Policy -->
+            <div class="w-full md:w-1/2 bg-gray-50 p-6 sm:p-8 lg:p-12 flex flex-col justify-between">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">Payment & Confirmation Process</h2>
+                    <p class="text-gray-600 mb-6">
+                        We prioritize securing your requested time. Here's how the booking and payment process works:
+                    </p>
+
+                    <!-- Payment Details -->
+                    <div class="space-y-4 text-gray-700 border-l-4 border-orange-500 pl-4 py-2 mb-8 bg-white p-4 rounded-lg">
+                        <h3 class="font-bold text-lg text-gray-800 flex items-center">
+                            <svg class="h-5 w-5 mr-2 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 2v1H4V6h12zm-3 4a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1z" clip-rule="evenodd"/>
+                            </svg>
+                            Step 1: Receive Confirmation & Payment Link
+                        </h3>
+                        <ul class="list-disc ml-5 text-sm space-y-1 text-gray-600">
+                            <li>Upon receiving your request, we will confirm the time slot within **1 hour** (during business hours).</li>
+                            <li>A secure, personalized **payment link (invoice)** reflecting your preferred currency will be sent via email.</li>
+                            <li>Payment is due within 24 hours of receiving the invoice to secure the slot.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Accepted Methods -->
+                    <div class="space-y-4 text-gray-700 border-l-4 border-emerald-500 pl-4 py-2 mb-8 bg-white p-4 rounded-lg">
+                        <h3 class="font-bold text-lg text-gray-800 flex items-center">
+                            <svg class="h-5 w-5 mr-2 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 7a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"/>
+                            </svg>
+                            Accepted Payment Methods
+                        </h3>
+                        <p class="text-sm text-gray-600">
+                            We accept all major credit/debit cards (via secure link through our payment processor), PayPal, and select bank transfers (EFT). We will convert the quoted price based on your **Preferred Currency** at the time of invoicing.
+                        </p>
+                    </div>
+                    
+                    <!-- Placeholder Image (Calendar/Booking) -->
+                    <img 
+                        src="https://placehold.co/800x400/fff3e8/f97316?text=Secure+Invoicing+System" 
+                        alt="A motivational image representing scheduling and success" 
+                        class="mt-8 rounded-lg object-cover w-full h-40 sm:h-48 md:h-64 lg:h-80"
+                        onerror="this.src='https://placehold.co/800x400/fff3e8/f97316?text=Secure+Invoicing+System'"
+                    >
+                </div>
+            </div>
+
+        </div>
+
+        <p class="text-center mt-8 text-xs text-gray-500">
+            By submitting, you agree that communication will open your chosen application (Email Client or WhatsApp) to finalize the booking.
+        </p>
+    </div>
+
+    <script>
+        // ----------------------------------------------------------------------
+        // *** 1. ACTION REQUIRED: PUT YOUR EMAIL ADDRESS HERE ***
+        // ----------------------------------------------------------------------
+        const recipientEmail = "your.coaching.email@example.com"; 
+
+        // ----------------------------------------------------------------------
+        // *** 2. ACTION REQUIRED: PUT YOUR WHATSAPP NUMBER HERE (with country code, e.g., +18005551234) ***
+        // ----------------------------------------------------------------------
+        const whatsappNumber = "+18005551234";
+
+        /**
+         * Shows the terms modal (simulated via message box for simplicity).
+         */
+        function showTerms(event) {
+            event.preventDefault(); // Stop the '#' link from scrolling
+            const messageBox = document.getElementById('messageBox');
+            document.getElementById('messageTitle').textContent = "Payment & Cancellation Policy";
+            document.getElementById('messageBody').innerHTML = 
+                'Payment is due within 24 hours of receiving the invoice to secure the slot. ' + 
+                'Cancellations made 48 hours in advance receive a full refund. Less than 48 hours forfeits the payment.';
+            messageBox.classList.remove('hidden');
+        }
+
+        /**
+         * Handles the submission for the Mailto (Email) link.
+         */
+        function handleSubmission(event) {
+            const form = document.getElementById('bookingForm');
+            // Check form validity before proceeding
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return; 
+            }
+
+            event.preventDefault();
+
+            // Get all booking values
+            const name = document.getElementById('name').value;
+            const clientEmail = document.getElementById('email').value;
+            const service = document.getElementById('service').value;
+            const preferredDate = document.getElementById('preferredDate').value;
+            const preferredTime = document.getElementById('preferredTime').value;
+            const timeZone = document.getElementById('timeZone').value;
+            const clientCountry = document.getElementById('clientCountry').value;
+            const paymentCurrency = document.getElementById('paymentCurrency').value;
+            const agreed = document.getElementById('agreeTerms').checked ? "YES" : "NO (FORM VALIDATION FAILED)";
+
+            // Define Subject
+            const subject = encodeURIComponent(`HIGH PRIORITY BOOKING REQUEST: ${name} - ${service}`);
+
+            // Format date and time for readability
+            const formattedDate = new Date(preferredDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            
+            // Construct the Email Body
+            const bodyContent = 
+                `Hello Apex Team,\n\n` +
+                `I am submitting a high-priority booking request with the following details:\n\n` +
+                `--- Booking Details ---\n` +
+                `Client Name: ${name}\n` +
+                `Client Email: ${clientEmail}\n` +
+                `Requested Service: ${service}\n\n` +
+                `Preferred Date: ${formattedDate}\n` +
+                `Preferred Time: ${preferredTime}\n` +
+                `Client Time Zone: ${timeZone}\n\n` +
+                `Client Country: ${clientCountry}\n` +
+                `Preferred Invoice Currency: ${paymentCurrency}\n\n` +
+                `Agreement to Terms: ${agreed}\n\n` +
+                `Could you please confirm the availability and send the personalized secure payment link right away?\n` +
+                `Thank you, ${name}`;
+
+            const body = encodeURIComponent(bodyContent);
+
+            // Create the final mailto link
+            const mailtoLink = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+
+            // Display a message box and open the email client
+            const messageBox = document.getElementById('messageBox');
+            document.getElementById('messageTitle').textContent = "Email Client Opening...";
+            document.getElementById('messageBody').textContent = "We've compiled your detailed booking request. Please send the pre-filled email from your client!";
+            messageBox.classList.remove('hidden');
+
+            // Open the mailto link
+            window.location.href = mailtoLink;
+        }
+
+
+        /**
+         * Handles the submission for the WhatsApp chat link.
+         */
+        function handleWhatsAppSubmission(event) {
+            const form = document.getElementById('bookingForm');
+            // Check form validity before proceeding
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return; 
+            }
+
+            event.preventDefault();
+
+            // Get required values
+            const name = document.getElementById('name').value;
+            const service = document.getElementById('service').value;
+            const preferredDate = document.getElementById('preferredDate').value;
+            const preferredTime = document.getElementById('preferredTime').value;
+            const timeZone = document.getElementById('timeZone').value;
+            const clientCountry = document.getElementById('clientCountry').value;
+            const paymentCurrency = document.getElementById('paymentCurrency').value;
+
+            // Format date for WhatsApp message
+            const formattedDate = new Date(preferredDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+            // Construct a pre-filled WhatsApp message
+            const whatsappMessage = 
+                `Hi Apex Coaching, I'm ${name} and I'm requesting to book the "${service}". ` + 
+                `My preferred slot is on ${formattedDate} at ${preferredTime} (${timeZone}). ` + 
+                `I am located in ${

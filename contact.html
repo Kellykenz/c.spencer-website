@@ -1,408 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Hamburger Menu & Booking Form</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Configure Tailwind for custom colors and smooth transitions -->
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        // Deep blue for primary actions and branding
-                        'primary-blue': '#1e40af', 
-                        // Very light background color for the body (like slate-50)
-                        'secondary-gray': '#f8fafc', 
-                    },
-                }
-            }
-        }
-    </script>
-    <style>
-        /* Define the transition for the mobile menu */
-        .nav-menu-mobile {
-            transition: max-height 0.4s ease-in-out; /* Smooth vertical slide transition */
-            overflow: hidden; /* Hide content outside the max-height */
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-        }
-        /* State when the menu is hidden (for the smooth transition) */
-        .h-0 {
-            max-height: 0;
-        }
-        /* State when the menu is shown (for the smooth transition) */
-        .h-full-menu {
-            /* A large value to ensure all content fits */
-            max-height: 500px; 
-        }
-        /* Styling the hamburger lines */
-        .hamburger-line {
-            display: block;
-            height: 2px;
-            width: 24px;
-            background-color: #374151; /* Dark gray */
-            border-radius: 9999px; /* Fully rounded */
-            transition: all 0.3s ease-in-out;
-        }
-        /* Transform the hamburger icon into an 'X' */
-        .hamburger-active .top-line {
-            transform: translateY(6px) rotate(45deg);
-        }
-        .hamburger-active .middle-line {
-            opacity: 0;
-        }
-        .hamburger-active .bottom-line {
-            transform: translateY(-8px) rotate(-45deg);
-        }
-        /* Style for select dropdowns to hide default arrow and use custom styling */
-        select {
-            /* Custom SVG arrow, matching the gray color */
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3e%3cpath d='M7 7l3 3 3-3' stroke='%234B5563' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
-            background-repeat: no-repeat;
-            background-position: right 0.7rem center;
-            background-size: 1.5em 1.5em;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Your Coaching Website</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configure Tailwind Colors & Font -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // Primary color (Dark Blue)
+                        'dark-blue': '#1e40af', 
+                        // New Accent color (Navy Blue)
+                        'navy-accent': '#102A43', 
+                        // White/Off-White color
+                        'off-white': '#f9fafb',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <!-- Custom style for smooth transition -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        .transition-height {
+            transition: max-height 0.3s ease-in-out;
+            overflow: hidden;
+        }
+    </style>
 </head>
-<body class="bg-secondary-gray min-h-screen font-sans">
+<body class="bg-off-white font-sans text-gray-800">
 
-    <!-- Navigation Bar Container -->
-    <!-- The navbar is set to bg-white and sticky for consistent viewing -->
-    <nav class="bg-white shadow-xl sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
+    <!-- Navbar: Dark Blue Background -->
+    <header class="bg-dark-blue shadow-lg sticky top-0 z-50">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Brand -->
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-2xl font-bold text-white tracking-wider">
+                        C. <span style="color: white;">SPENCER</span>
+                    </a>
+                </div>
 
-                <!-- Logo/Brand Name -->
-                <div class="flex-shrink-0">
-                    <a href="#" class="text-2xl font-extrabold text-primary-blue tracking-wide transition duration-150 hover:text-blue-700">
-                        C. <span class="text-gray-800">S</span >
-                    </a>
-                </div>
+                <!-- Desktop Navigation Links -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="text-white hover:text-navy-accent py-2 px-3 rounded-md text-sm font-medium transition duration-150">Home</a>
+                    <a href="generic.html" class="text-white hover:text-navy-accent py-2 px-3 rounded-md text-sm font-medium transition duration-150">About</a>
+                    <a href="elements.html" class="text-white hover:text-navy-accent py-2 px-3 rounded-md text-sm font-medium transition duration-150">Services</a>
+                    <a href="index.html#three" class="text-white hover:text-navy-accent py-2 px-3 rounded-md text-sm font-medium transition duration-150">Testimonials</a>
+                    <a href="elements.html" class="text-white hover:text-navy-accent py-2 px-3 rounded-md text-sm font-medium transition duration-150">Book a session</a>
+                    <a href="contact.html" class="bg-navy-accent text-white py-2 px-4 rounded-lg text-sm font-medium shadow-md hover:bg-gray-800 transition duration-150">Contact</a>
+                </div>
 
-                <!-- Desktop Menu Links (Visible on screens >= sm) -->
-                <div class="hidden sm:ml-6 sm:flex sm:space-x-4 md:space-x-8 items-center">
-                    <a href="index.html" class="text-gray-600 hover:bg-primary-blue hover:text-white px-3 py-2 rounded-lg text-base font-medium transition duration-200">Home</a>
-                    <a href="elements.html" class="text-gray-600 hover:bg-primary-blue hover:text-white px-3 py-2 rounded-lg text-base font-medium transition duration-200">Services</a>
-                    <a href="generic.html" class="text-gray-600 hover:bg-primary-blue hover:text-white px-3 py-2 rounded-lg text-base font-medium transition duration-200">About Us</a>
-                    <!-- Contact button stands out -->
-                    <a href="#" class="text-white bg-primary-blue hover:bg-blue-700 px-4 py-2 rounded-lg text-base font-medium transition duration-200 shadow-md hover:shadow-lg transform hover:scale-[1.05]">Contact</a>
-                </div>
+                <!-- Mobile Menu Button (Hamburger) -->
+                <div class="md:hidden">
+                    <button id="menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-off-white hover:bg-navy-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition duration-150" aria-controls="mobile-menu" aria-expanded="false">
+                        <!-- Icon when menu is closed. -->
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <!-- Icon when menu is open. -->
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu, toggle based on menu state. -->
+            <div class="md:hidden transition-height max-h-0" id="mobile-menu">
+                <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                    <a href="index.html" class="text-white hover:bg-navy-accent block px-3 py-2 rounded-md text-base font-medium transition duration-150">Home</a>
+                    <a href="generic.html" class="text-white hover:bg-navy-accent block px-3 py-2 rounded-md text-base font-medium transition duration-150">Services</a>
+                    <a href="index.html#three" class="text-white hover:bg-navy-accent block px-3 py-2 rounded-md text-base font-medium transition duration-150">Testimonials</a>
+                    <a href="contact.html" class="text-white hover:bg-navy-accent block px-3 py-2 rounded-md text-base font-medium transition duration-150">Contact</a>
+                    <a href="BOOK.html" class="text-white hover:bg-navy-accent block px-3 py-2 rounded-md text-base font-medium transition duration-150">Book</a>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-                <!-- Mobile Menu Button (Hamburger - Hidden on screens >= sm) -->
-                <div class="sm:hidden">
-                    <button id="hamburger-button" type="button" class="inline-flex items-center justify-center p-2 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-100 focus:outline-none transition duration-150 ease-in-out" aria-controls="mobile-menu" aria-expanded="false">
-                        <span class="sr-only">Open main menu</span>
-                        <div class="flex flex-col space-y-1.5">
-                            <span class="hamburger-line top-line"></span>
-                            <span class="hamburger-line middle-line"></span>
-                            <span class="hamburger-line bottom-line"></span>
-                        </div>
-                    </button>
-                </div>
+    <!-- Main Content: Contact Section -->
+    <main class="py-16 sm:py-24">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h1 class="text-5xl font-extrabold text-dark-blue mb-4">Get In Touch</h1>
+                <p class="text-xl text-gray-500">Ready to transform your life? Connect instantly via WhatsApp.</p>
+            </div>
 
-            </div>
-        </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+                
+                <!-- Contact Information Card -->
+                <div class="lg:col-span-1 bg-white p-8 rounded-xl shadow-2xl border-t-4 border-navy-accent">
+                    <h2 class="text-2xl font-bold text-dark-blue mb-4">Our Details</h2>
+                    <div class="space-y-6">
+                        <!-- Email -->
+                        <div class="flex items-start space-x-3">
+                            <svg class="w-6 h-6 text-navy-accent flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-2 4v7a2 2 0 01-2 2H7a2 2 0 01-2-2v-7"></path></svg>
+                            <div>
+                                <h3 class="font-semibold text-gray-700">Email Address (Alternative)</h3>
+                                <p class="text-gray-500">info@coachpro.com</p>
+                            </div>
+                        </div>
+                        <!-- Phone -->
+                        <div class="flex items-start space-x-3">
+                            <svg class="w-6 h-6 text-navy-accent flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                            <div>
+                                <h3 class="font-semibold text-gray-700">Call Us</h3>
+                                <p class="text-gray-500">+1 (555) 123-4567</p>
+                            </div>
+                        </div>
+                        <!-- Location -->
+                        <div class="flex items-start space-x-3">
+                            <svg class="w-6 h-6 text-navy-accent flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            <div>
+                                <h3 class="font-semibold text-gray-700">Our Office</h3>
+                                <p class="text-gray-500">123 Wellness Way, Suite 400, New York, NY 10001</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- Mobile Menu Panel (Hidden by default, shown via JS toggle) -->
-        <div id="mobile-menu" class="sm:hidden nav-menu-mobile h-0" role="menu" aria-orientation="vertical" aria-labelledby="hamburger-button">
-            <div class="px-2 pt-2 pb-3 space-y-1 bg-gray-50 border-t border-gray-200">
-                <a href="index.html" class="text-gray-700 hover:bg-gray-200 block px-3 py-2 rounded-lg text-base font-medium transition duration-200" role="menuitem">Home</a>
-                <a href="elements.html" class="text-gray-700 hover:bg-gray-200 block px-3 py-2 rounded-lg text-base font-medium transition duration-200" role="menuitem">Services</a>
-                <a href="generic.html" class="text-gray-700 hover:bg-gray-200 block px-3 py-2 rounded-lg text-base font-medium transition duration-200" role="menuitem">About Us</a>
-                <a href="contact" class="text-white bg-primary-blue hover:bg-blue-700 block px-3 py-2 rounded-lg text-base font-medium transition duration-200 shadow-md" role="menuitem">Contact</a>
-            </div>
-        </div>
-    </nav>
+                <!-- WhatsApp Contact Section (Replaced Form) -->
+                <div class="lg:col-span-2 bg-white p-8 rounded-xl shadow-2xl border-t-4 border-dark-blue flex flex-col items-center text-center">
+                    <h2 class="text-3xl font-bold text-dark-blue mb-4">Chat With Me Now</h2>
+                    <p class="text-lg text-gray-600 mb-10 max-w-lg">Click the button below to start an instant, private conversation on WhatsApp. I look forward to hearing about your goals!</p>
+                    
+                    <!-- WhatsApp Link Button -->
+                    <!-- NOTE TO USER: REPLACE '15551234567' with your full WhatsApp number (including country code, without + or spaces). -->
+                    <a href="https://wa.me/+2348126962609?text=Hello%20CoachPro,%20I%20saw%20your%20website%20and%20want%20to%20know%20more%20about%20your%20coaching%20services."
+                        target="_blank"
+                        class="w-full sm:w-2/3 flex items-center justify-center py-4 px-6 border border-transparent rounded-lg shadow-lg text-xl font-bold text-white bg-dark-blue hover:bg-navy-accent focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-navy-accent transition duration-300 transform hover:scale-[1.02]">
+                        <!-- WhatsApp Icon (Inline SVG) -->
+                        <svg class="w-7 h-7 mr-3" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12.031 3.179c-4.142 0-7.5 3.357-7.5 7.5 0 1.246.331 2.453.953 3.524l-.999 3.648 3.738-.985c1.002.551 2.13.857 3.791.857h.018c4.142 0 7.5-3.357 7.5-7.5s-3.358-7.5-7.5-7.5zm4.846 10.368c-.244-.121-.295-.195-.444-.269s-.325-.18-.499-.214c-.173-.034-.374-.017-.574-.017-.201 0-.444.051-.689.344s-.939 1.141-1.14 1.373c-.201.233-.401.258-.744.077-.344-.18-.466-.144-1.29-.444-.823-.3-1.956-.755-2.748-2.261-.794-1.506-.08-2.33.568-2.977.147-.147.34-.195.452-.403s.061-.41-.01-.584c-.071-.173-.646-1.558-.889-2.128-.244-.569-.49-.494-.689-.494-.173 0-.374-.017-.574-.017-.201 0-.528.067-.808.344s-1.092 1.077-1.092 2.628c0 1.55 1.114 3.033 1.275 3.266 0 0 1.932 2.983 4.71 4.298 2.778 1.314 2.778 1.159 3.28 1.133.502-.025 1.353-.551 1.547-1.045s.201-.892-.044-1.124c-.244-.233-.509-.344-.753-.466z"/>
+                        </svg>
+                        Start Chat on WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    <!-- Main Content: Session Booking Form -->
-    <div class="max-w-4xl mx-auto px-4 py-8">
-        <div class="bg-white p-6 md:p-10 rounded-xl shadow-2xl">
-            <h1 class="text-3xl font-bold text-gray-800 mb-2">Book Your Session</h1>
-            <p class="text-gray-500 mb-8">Please provide your details to help us customize your training experience.</p>
-
-            <form id="session-booking-form" class="space-y-8">
-                
-                <!-- Hidden fields to store YOUR contact info for use in JS -->
-                <input type="hidden" id="my-whatsapp" value="+2349011211609">
-                <input type="hidden" id="my-email" value="kelsonspencer22@gmail.com">
-
-
-                <!-- Section 1: Personal & Contact Information -->
-                <fieldset class="border-t border-gray-200 pt-6">
-                    <legend class="text-xl font-semibold text-primary-blue mb-6">1. Personal & Contact Information</legend>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- WhatsApp Number -->
-                        <div>
-                            <label for="whatsapp-number" class="block text-sm font-medium text-gray-700">WhatsApp Number (Required)</label>
-                            <input type="tel" id="whatsapp-number" name="whatsapp-number" required placeholder="e.g., +123 456 7890" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:border-primary-blue focus:ring-primary-blue transition">
-                        </div>
-                        <!-- Phone Number -->
-                        <div>
-                            <label for="phone-number" class="block text-sm font-medium text-gray-700">Phone Number (Optional)</label>
-                            <input type="tel" id="phone-number" name="phone-number" placeholder="e.g., +123 456 7890" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:border-primary-blue focus:ring-primary-blue transition">
-                        </div>
-                    </div>
-
-                    <!-- Age Field -->
-                    <div class="mt-6">
-                        <label for="age" class="block text-sm font-medium text-gray-700">Age (Required, especially for kids)</label>
-                        <input type="number" id="age" name="age" min="1" max="100" required placeholder="Enter age in years" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:border-primary-blue focus:ring-primary-blue transition">
-                    </div>
-                </fieldset>
-
-                <!-- Section 2: Training Preferences -->
-                <fieldset class="border-t border-gray-200 pt-6">
-                    <legend class="text-xl font-semibold text-primary-blue mb-6">2. Training Goals & Experience</legend>
-
-                    <!-- Training Goal -->
-                    <div>
-                        <label for="training-goal" class="block text-sm font-medium text-gray-700">Primary Training Goal (Required)</label>
-                        <textarea id="training-goal" name="training-goal" rows="3" required placeholder="e.g., improve fitness, learn a new skill, competitive preparation, general well-being..." class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:border-primary-blue focus:ring-primary-blue transition"></textarea>
-                    </div>
-
-                    <!-- Experience Level -->
-                    <div class="mt-6">
-                        <label for="experience-level" class="block text-sm font-medium text-gray-700">Experience Level (Required)</label>
-                        <select id="experience-level" name="experience-level" required class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:border-primary-blue focus:ring-primary-blue transition appearance-none pr-8">
-                            <option value="" disabled selected>Select your current level</option>
-                            <option value="Beginner">Beginner (No prior experience)</option>
-                            <option value="Novice">Novice (Some basic knowledge/attended a few sessions)</option>
-                            <option value="Intermediate">Intermediate (Regularly train, solid foundation)</option>
-                            <option value="Advanced">Advanced (Experienced, competitive focus)</option>
-                        </select>
-                    </div>
-
-                    <!-- Session Type -->
-                    <div class="mt-6">
-                        <span class="text-sm font-medium text-gray-700">Preferred Session Type (Required)</span>
-                        <div class="mt-2 flex space-x-6">
-                            <label class="inline-flex items-center">
-                                <input type="radio" name="session-type" value="Private (1-on-1)" required class="form-radio h-4 w-4 text-primary-blue border-gray-300 focus:ring-primary-blue">
-                                <span class="ml-2 text-gray-700">Private (1-on-1)</span>
-                            </label>
-                            <label class="inline-flex items-center">
-                                <input type="radio" name="session-type" value="Group" class="form-radio h-4 w-4 text-primary-blue border-gray-300 focus:ring-primary-blue">
-                                <span class="ml-2 text-gray-700">Group</span>
-                            </label>
-                        </div>
-                    </div>
-                </fieldset>
-
-                <!-- Section 3: Scheduling & Communication -->
-                <fieldset class="border-t border-gray-200 pt-6">
-                    <legend class="text-xl font-semibold text-primary-blue mb-6">3. Availability & Communication</legend>
-
-                    <!-- Preferred Training Days/Time -->
-                    <div>
-                        <label for="preferred-time" class="block text-sm font-medium text-gray-700">Preferred Training Days and Time (Required)</label>
-                        <textarea id="preferred-time" name="preferred-time" rows="3" required placeholder="e.g., Weekdays after 5 PM, Saturday mornings, etc." class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:border-primary-blue focus:ring-primary-blue transition"></textarea>
-                    </div>
-
-                    <!-- Preferred Communication Method -->
-                    <div class="mt-6" id="comm-method-group">
-                        <span class="text-sm font-medium text-gray-700 block mb-2">Preferred Method of Communication After Booking</span>
-                        <p class="text-xs text-gray-400 mb-3">This helps us coordinate your session quickly and effectively.</p>
-                        
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <!-- WhatsApp Option -->
-                            <label class="flex items-start p-4 border-2 border-primary-blue bg-primary-blue/5 rounded-lg cursor-pointer hover:shadow-lg transition duration-150" id="label-whatsapp">
-                                <input type="radio" name="comm-method" value="whatsapp" id="comm-whatsapp" checked class="mt-1.5 h-5 w-5 text-primary-blue border-gray-300 focus:ring-primary-blue">
-                                <span class="ml-3">
-                                    <span class="block font-semibold text-gray-700">WhatsApp (Primary)</span>
-                                    <!-- Contact details kept hidden as requested -->
-                                    <span class="block text-xs text-green-600 font-medium" id="contact-whatsapp"></span>
-                                </span>
-                            </label>
-                            <!-- Email Option -->
-                            <label class="flex items-start p-4 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition duration-150" id="label-email">
-                                <input type="radio" name="comm-method" value="email" id="comm-email" class="mt-1.5 h-5 w-5 text-primary-blue border-gray-300 focus:ring-primary-blue">
-                                <span class="ml-3">
-                                    <span class="block font-semibold text-gray-700">Email (Secondary)</span>
-                                    <!-- Contact details kept hidden as requested -->
-                                    <span class="block text-xs text-gray-600 font-medium" id="contact-email"></span>
-                                </span>
-                            </label>
-                        </div>
-                    </div>
-                </fieldset>
-
-                <!-- Section 4: Notes -->
-                <fieldset class="border-t border-gray-200 pt-6">
-                    <legend class="text-xl font-semibold text-primary-blue mb-6">4. Additional Notes</legend>
-
-                    <!-- Additional Notes/Questions -->
-                    <div>
-                        <label for="additional-notes" class="block text-sm font-medium text-gray-700">Additional Notes or Questions</label>
-                        <textarea id="additional-notes" name="additional-notes" rows="4" placeholder="Is there anything else we should know before your session?" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:border-primary-blue focus:ring-primary-blue transition"></textarea>
-                    </div>
-                </fieldset>
-
-                <!-- Submit Button -->
-                <div class="pt-2">
-                    <button type="submit" id="submit-button" class="w-full py-3 px-4 border border-transparent rounded-lg shadow-xl text-lg font-medium text-white bg-primary-blue hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-blue transition duration-300 ease-in-out transform hover:scale-[1.01]">
-                        Submit via WhatsApp
-                    </button>
-                    <!-- Submission Confirmation Message -->
-                    <div id="submission-message" class="mt-4 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg hidden" role="alert">
-                        <p class="font-semibold">Success!</p>
-                        <p>A new window was opened to complete your booking. We will contact you shortly to confirm the details.</p>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+    <!-- Footer: Dark Blue Background -->
+    <footer class="bg-dark-blue mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-white text-sm">&copy; <span id="current-year"></span> CoachPro. All rights reserved.</p>
+            <div class="flex justify-center space-x-4 mt-3">
+                <a href="#" class="text-white hover:text-navy-accent transition duration-150">Privacy Policy</a>
+                <span class="text-white">|</span>
+                <a href="#" class="text-white hover:text-navy-accent transition duration-150">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
 
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const button = document.getElementById('hamburger-button');
-            const menu = document.getElementById('mobile-menu');
-            const form = document.getElementById('session-booking-form');
-            const message = document.getElementById('submission-message');
-            
-            const commRadios = document.querySelectorAll('input[name="comm-method"]');
-            const submitButton = document.getElementById('submit-button');
-            const myWhatsapp = document.getElementById('my-whatsapp').value.replace(/\+/g, ''); // Get and clean number (remove +)
-            const myEmail = document.getElementById('my-email').value;
+    <script>
+        // --- 1. Navbar Mobile Toggle Script ---
+        const menuButton = document.getElementById('menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
 
-            // Log error if required elements are missing
-            if (!button || !menu || !form || !message || !submitButton) {
-                console.error('One or more required elements not found. Cannot initialize app logic.');
-                return;
-            }
+        menuButton.addEventListener('click', () => {
+            const isExpanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+            menuButton.setAttribute('aria-expanded', !isExpanded);
 
-            // ----------------------------------------------------
-            // 1. Mobile Menu Toggle Logic
-            // ----------------------------------------------------
-            button.addEventListener('click', () => {
-                const isExpanded = menu.classList.toggle('h-full-menu');
-                menu.classList.toggle('h-0', !isExpanded);
-                button.classList.toggle('hamburger-active', isExpanded);
-                button.setAttribute('aria-expanded', isExpanded);
-            });
+            const hamburgerIcon = menuButton.querySelector('svg:first-child');
+            const closeIcon = menuButton.querySelector('svg:last-child');
+            
+            if (!isExpanded) {
+                // Open menu
+                mobileMenu.classList.remove('max-h-0');
+                mobileMenu.classList.add('max-h-screen');
+                hamburgerIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+            } else {
+                // Close menu
+                mobileMenu.classList.remove('max-h-screen');
+                mobileMenu.classList.add('max-h-0');
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
+        });
+        
+        // --- 2. Set current year in the footer ---
+        document.getElementById('current-year').textContent = new Date().getFullYear();
 
-
-            // ----------------------------------------------------
-            // 2. Dynamic Submit Button Text and Radio Styling
-            // ----------------------------------------------------
-            const updateSubmitButtonText = () => {
-                const selectedRadio = document.querySelector('input[name="comm-method"]:checked');
-                
-                // Get references to labels
-                const labelWhatsapp = document.getElementById('label-whatsapp');
-                const labelEmail = document.getElementById('label-email');
-                
-                // Reset styles
-                [labelWhatsapp, labelEmail].forEach(label => {
-                    label.classList.remove('border-2', 'border-primary-blue', 'bg-primary-blue/5');
-                    label.classList.add('border', 'border-gray-300', 'hover:bg-gray-50');
-                });
-
-                if (selectedRadio) {
-                    const method = selectedRadio.value;
-                    const text = method.charAt(0).toUpperCase() + method.slice(1);
-                    submitButton.textContent = `Submit via ${text}`;
-                    
-                    // Apply selected style to the active label
-                    const activeLabel = document.getElementById(`label-${method}`);
-                    if (activeLabel) {
-                        activeLabel.classList.add('border-2', 'border-primary-blue', 'bg-primary-blue/5');
-                        activeLabel.classList.remove('border', 'border-gray-300', 'hover:bg-gray-50');
-                    }
-                }
-            }
-
-            // Set initial state and listeners
-            updateSubmitButtonText();
-            commRadios.forEach(radio => {
-                radio.addEventListener('change', updateSubmitButtonText);
-            });
-
-
-            // ----------------------------------------------------
-            // 3. Form Submission Logic (WhatsApp/Email link generation)
-            // ----------------------------------------------------
-
-            // Helper function to format the submission data into a readable message
-            const formatSubmissionMessage = (data, format = 'whatsapp') => {
-                // Decide on newline character based on format
-                const newLine = format === 'whatsapp' ? '%0A' : '\n';
-                const separator = format === 'whatsapp' ? '%20-%20' : ' - ';
-
-                let message = `*NEW SESSION BOOKING REQUEST*${newLine}${newLine}`;
-                message += `--- Contact Information ---${newLine}`;
-                message += `WhatsApp:${separator}${data['whatsapp-number']}${newLine}`;
-                message += `Phone:${separator}${data['phone-number'] || 'N/A'}${newLine}`;
-                message += `Age:${separator}${data['age']}${newLine}${newLine}`;
-
-                message += `--- Training Details ---${newLine}`;
-                message += `Goal:${separator}${data['training-goal']}${newLine}`;
-                message += `Level:${separator}${data['experience-level']}${newLine}`;
-                message += `Type:${separator}${data['session-type']}${newLine}${newLine}`;
-
-                message += `--- Scheduling & Notes ---${newLine}`;
-                message += `Preferred Time:${separator}${data['preferred-time']}${newLine}`;
-                message += `Notes:${separator}${data['additional-notes'] || 'None'}${newLine}${newLine}`;
-                
-                message += `_Client prefers communication via ${data['comm-method'].toUpperCase()}_`;
-
-                return message;
-            };
-
-            form.addEventListener('submit', (event) => {
-                event.preventDefault(); // Prevent default form submission
-
-                const formData = new FormData(form);
-                const data = {};
-                for (let [key, value] of formData.entries()) {
-                    data[key] = value.trim();
-                }
-
-                const commMethod = data['comm-method'];
-                let targetUrl = '';
-                
-                if (commMethod === 'whatsapp') {
-                    const whatsappMessage = encodeURIComponent(formatSubmissionMessage(data, 'whatsapp'));
-                    // Using wa.me API link
-                    targetUrl = `https://wa.me/${myWhatsapp}?text=${whatsappMessage}`;
-                } else if (commMethod === 'email') {
-                    const subject = encodeURIComponent('NEW Training Session Booking Request');
-                    // Email body needs standard newlines and is URL-encoded
-                    const emailBody = encodeURIComponent(formatSubmissionMessage(data, 'email')); 
-                    // Using mailto link
-                    targetUrl = `mailto:${myEmail}?subject=${subject}&body=${emailBody}`;
-                }
-
-                if (targetUrl) {
-                    // Open the generated URL in a new window/tab
-                    window.open(targetUrl, '_blank');
-
-                    // Display Success Message and reset
-                    message.classList.remove('hidden');
-                    form.reset();
-
-                    // Re-select WhatsApp radio button and update text/styles after reset
-                    document.getElementById('comm-whatsapp').checked = true;
-                    updateSubmitButtonText(); 
-
-                    // Optional: Hide message after a few seconds
-                    setTimeout(() => {
-                        message.classList.add('hidden');
-                    }, 5000); 
-
-                } else {
-                    console.error('Error: Communication method not selected or invalid.');
-                }
-            });
-        });
-    </script>
-
+    </script>
 </body>
-
 </html>

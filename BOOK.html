@@ -3,398 +3,560 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Book a Session | Apex Coaching</title>
-    <!-- Load Tailwind CSS -->
+    <title>Dynamic Contact Forms - Detailed Booking</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    <style>
-        /* Custom Styles for Aesthetics and Focus */
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f7f7f7; 
-        }
-        .booking-card {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        }
-        @media (min-width: 768px) {
-            .booking-card {
-                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-whatsapp': '#25D366',
+                        'brand-email': '#D93025',
+                        'accent': '#4F46E5',
+                        'primary-dark': '#1e293b',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
             }
         }
-        
-        input:focus,
-        select:focus,
-        textarea:focus {
-            border-color: #f97316; /* Orange focus for 'Bookings' vibe */
-            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.3); 
-            outline: none;
+    </script>
+    <style>
+        /* Custom CSS for smooth transitions and focus states */
+        .form-input {
+            transition: all 0.2s ease-in-out;
         }
-        .submit-button {
-            transition: all 0.3s ease;
+        .form-input:focus {
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.5); /* Accent color ring */
+            border-color: #212130;
         }
-        .submit-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* Modal Overlay for click-to-close functionality */
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 50;
+            padding: 1rem; /* Ensure padding on all sides for small screens */
+            overflow-y: auto; 
         }
-        /* Styling the dropdown arrow */
-        select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
+        /* Ensure dropdown arrows are visible */
+        select.form-input {
             appearance: none;
-            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='currentColor'%3e%3cpath d='M7 7l3-3 3 3m0 6l-3 3-3-3' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236B7280'%3E%3Cpath fill-rule='evenodd' d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z' clip-rule='evenodd' /%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 0.75rem center;
             background-size: 1.5em 1.5em;
-        }
-
-        /* Styles for the custom message box */
-        .message-box {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 50;
+            padding-right: 2.5rem;
         }
     </style>
 </head>
-<body class="overflow-x-hidden">
+<body class="bg-gray-50 font-sans min-h-screen pt-20 pb-4">
 
-    <!-- Custom Modal/Message Box for feedback -->
-    <div id="messageBox" class="message-box hidden bg-white rounded-lg p-6 shadow-xl max-w-sm w-11/12 border-t-4 border-orange-500 transition-opacity duration-300">
-        <h3 class="text-xl font-bold text-gray-800 mb-3" id="messageTitle">Booking Request Sent!</h3>
-        <p class="text-gray-600 mb-4" id="messageBody">We've compiled your booking details and are opening your selected app. Please send the pre-filled message!</p>
-        <button onclick="document.getElementById('messageBox').classList.add('hidden')" class="w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition">Close</button>
-    </div>
-    
-    <!-- Main Content -->
-    <div class="max-w-7xl mx-auto py-6 sm:py-12 px-4 sm:px-6 lg:px-8">
-        <header class="text-center mb-8 md:mb-12">
-            <h1 class="text-4xl sm:text-5xl font-extrabold text-gray-900">Book and Confirm Your Session</h1>
-            <p class="mt-2 sm:mt-3 text-lg sm:text-xl text-gray-500 max-w-3xl mx-auto">
-                Please provide all necessary details for accurate scheduling and invoicing.
-            </p>
-        </header>
+    <nav class="fixed top-0 left-0 w-full bg-white shadow-lg z-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="index.html" class="text-2xl font-bold text-primary-dark">C.<span style="color:rgb(95, 95, 95)">SPENCER</span></a>
+                </div>
 
-        <!-- Main Booking Card Container -->
-        <div class="booking-card bg-white rounded-2xl overflow-hidden md:flex">
-            
-            <!-- Left Side: Booking Form -->
-            <div class="w-full md:w-1/2 p-6 sm:p-8 lg:p-12">
-                <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-6">Request Your Time Slot</h2>
-                
-                <form id="bookingForm" class="space-y-5 sm:space-y-6"> 
-                    
-                    <!-- Row 1: Name and Email -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                            <input 
-                                type="text" 
-                                name="name" 
-                                id="name" 
-                                placeholder="Your Full Name"
-                                required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900"
-                            >
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
-                            <input 
-                                type="email" 
-                                name="email" 
-                                id="email" 
-                                placeholder="name@example.com"
-                                required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-900"
-                            >
-                        </div>
-                    </div>
+                <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                    <a href="index.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-accent hover:text-accent transition duration-150">Home</a>
+                    <a href="generic.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-accent hover:text-accent transition duration-150">About</a>
+                    <a href="elements.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-accent hover:text-accent transition duration-150">Service</a>
+                    <a href="contact.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium text-gray-500 hover:border-accent hover:text-accent transition duration-150">Contact</a>
+                    <a href="contact.html" class="inline-flex items-center px-1 pt-1 border-b-2 border-accent text-sm font-medium text-accent">Book Now</a>
+                </div>
 
-                    <!-- Row 2: Service Selection -->
-                    <div>
-                        <label for="service" class="block text-sm font-medium text-gray-700 mb-1">Select Service</label>
-                        <select 
-                            id="service" 
-                            name="service" 
-                            required
-                            class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700"
-                        >
-                            <option value="" disabled selected>Choose a Coaching Pathway...</option>
-                            <option value="Foundation Pathway ($199)">Foundation Pathway ($199)</option>
-                            <option value="Championship Pathway ($499)">Championship Pathway ($499)</option>
-                            <option value="Corporate Leadership Coaching (Quote)">Corporate Leadership Coaching (Quote)</option>
-                            <option value="Quick Consultation ($50)">Quick 30-min Consultation ($50)</option>
-                        </select>
-                    </div>
-
-                    <h3 class="text-lg font-bold text-gray-800 pt-3">Location & Time Preference</h3>
-
-                    <!-- Row 3: Preferred Date, Time, and Time Zone -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div>
-                            <label for="preferredDate" class="block text-sm font-medium text-gray-700 mb-1">Preferred Date</label>
-                            <input 
-                                type="date" 
-                                name="preferredDate" 
-                                id="preferredDate" 
-                                required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-700"
-                            >
-                        </div>
-                        <div>
-                            <label for="preferredTime" class="block text-sm font-medium text-gray-700 mb-1">Preferred Time</label>
-                            <input 
-                                type="time" 
-                                name="preferredTime" 
-                                id="preferredTime" 
-                                required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-700"
-                            >
-                        </div>
-                         <div>
-                            <label for="timeZone" class="block text-sm font-medium text-gray-700 mb-1">Your Time Zone</label>
-                            <input 
-                                type="text" 
-                                name="timeZone" 
-                                id="timeZone" 
-                                placeholder="e.g., EST, GMT+1, CST"
-                                required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-700"
-                            >
-                        </div>
-                    </div>
-                    
-                    <!-- Row 4: Country and Currency -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label for="clientCountry" class="block text-sm font-medium text-gray-700 mb-1">Your Country/Location</label>
-                            <input 
-                                type="text" 
-                                name="clientCountry" 
-                                id="clientCountry" 
-                                placeholder="e.g., Canada, Nigeria"
-                                required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-700"
-                            >
-                        </div>
-                        <div>
-                            <label for="paymentCurrency" class="block text-sm font-medium text-gray-700 mb-1">Preferred Payment Currency</label>
-                            <input 
-                                type="text" 
-                                name="paymentCurrency" 
-                                id="paymentCurrency" 
-                                placeholder="e.g., USD, EUR, GBP, CAD"
-                                required
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg text-gray-700"
-                            >
-                        </div>
-                    </div>
-
-
-                    <!-- Terms and Conditions Checkbox -->
-                    <div class="pt-2">
-                        <label class="flex items-center text-sm font-medium text-gray-700 cursor-pointer">
-                            <input type="checkbox" id="agreeTerms" name="agreeTerms" required class="h-4 w-4 text-orange-600 border-gray-300 rounded focus:ring-orange-500">
-                            <span class="ml-2">I have read and agree to the <a href="#" class="text-orange-600 hover:underline font-semibold" onclick="showTerms(event)">Payment & Cancellation Policy</a>.</span>
-                        </label>
-                    </div>
-
-                    <!-- Button Group for Email and WhatsApp -->
-                    <div class="space-y-4 pt-4">
-                        <p class="text-sm font-semibold text-gray-700">Final Step: Choose your preferred booking channel:</p>
-                        
-                        <!-- Email Button -->
-                        <button 
-                            type="button" 
-                            onclick="handleSubmission(event)" 
-                            class="submit-button w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-lg font-semibold text-white bg-orange-500 hover:bg-orange-600 focus:ring-4 focus:ring-orange-500 focus:ring-opacity-50"
-                        >
-                            Book & Confirm via Email
-                        </button>
-
-                        <!-- WhatsApp Button -->
-                        <button 
-                            type="button" 
-                            onclick="handleWhatsAppSubmission(event)" 
-                            class="submit-button w-full flex items-center justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-lg font-semibold text-white bg-emerald-500 hover:bg-emerald-600 focus:ring-4 focus:ring-emerald-500 focus:ring-opacity-50"
-                        >
-                            <!-- Simple Chat Icon -->
-                            <svg class="h-6 w-6 mr-3 fill-current text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M21 12C21 16.9706 16.9706 21 12 21C10.6698 21 9.38222 20.7397 8.1963 20.2458L3 21L3.75424 15.8037C3.26027 14.6178 3 13.3302 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            Book & Confirm via WhatsApp
-                        </button>
-                    </div>
-                </form>
-            </div>
-
-            <!-- Right Side: Details, Payment & Cancellation Policy -->
-            <div class="w-full md:w-1/2 bg-gray-50 p-6 sm:p-8 lg:p-12 flex flex-col justify-between">
-                <div>
-                    <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-4">Payment & Confirmation Process</h2>
-                    <p class="text-gray-600 mb-6">
-                        We prioritize securing your requested time. Here's how the booking and payment process works:
-                    </p>
-
-                    <!-- Payment Details -->
-                    <div class="space-y-4 text-gray-700 border-l-4 border-orange-500 pl-4 py-2 mb-8 bg-white p-4 rounded-lg">
-                        <h3 class="font-bold text-lg text-gray-800 flex items-center">
-                            <svg class="h-5 w-5 mr-2 text-orange-500" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm12 2v1H4V6h12zm-3 4a1 1 0 011 1v2a1 1 0 11-2 0v-2a1 1 0 011-1z" clip-rule="evenodd"/>
-                            </svg>
-                            Step 1: Receive Confirmation & Payment Link
-                        </h3>
-                        <ul class="list-disc ml-5 text-sm space-y-1 text-gray-600">
-                            <li>Upon receiving your request, we will confirm the time slot within **1 hour** (during business hours).</li>
-                            <li>A secure, personalized **payment link (invoice)** reflecting your preferred currency will be sent via email.</li>
-                            <li>Payment is due within 24 hours of receiving the invoice to secure the slot.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Accepted Methods -->
-                    <div class="space-y-4 text-gray-700 border-l-4 border-emerald-500 pl-4 py-2 mb-8 bg-white p-4 rounded-lg">
-                        <h3 class="font-bold text-lg text-gray-800 flex items-center">
-                            <svg class="h-5 w-5 mr-2 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 2a8 8 0 100 16 8 8 0 000-16zM8 7a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"/>
-                            </svg>
-                            Accepted Payment Methods
-                        </h3>
-                        <p class="text-sm text-gray-600">
-                            We accept all major credit/debit cards (via secure link through our payment processor), PayPal, and select bank transfers (EFT). We will convert the quoted price based on your **Preferred Currency** at the time of invoicing.
-                        </p>
-                    </div>
-                    
-                    <!-- Placeholder Image (Calendar/Booking) -->
-                    <img 
-                        src="https://placehold.co/800x400/fff3e8/f97316?text=Secure+Invoicing+System" 
-                        alt="A motivational image representing scheduling and success" 
-                        class="mt-8 rounded-lg object-cover w-full h-40 sm:h-48 md:h-64 lg:h-80"
-                        onerror="this.src='https://placehold.co/800x400/fff3e8/f97316?text=Secure+Invoicing+System'"
-                    >
+                <div class="sm:hidden flex items-center">
+                    <button id="menuButton" type="button" onclick="toggleMenu()" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-accent" aria-controls="mobile-menu" aria-expanded="false">
+                        <svg id="menuIcon" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="closeIcon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
                 </div>
             </div>
-
         </div>
 
-        <p class="text-center mt-8 text-xs text-gray-500">
-            By submitting, you agree that communication will open your chosen application (Email Client or WhatsApp) to finalize the booking.
-        </p>
+        <div class="sm:hidden hidden" id="mobileMenu">
+            <div class="pt-2 pb-3 space-y-1 px-2 border-t">
+                <a href="index.html" onclick="toggleMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-accent">Home</a>
+                <a href="generic.html" onclick="toggleMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-accent">About</a>
+                <a href="elements.html" onclick="toggleMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-accent">Service</a>
+                <a href="contact.html" onclick="toggleMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-accent">Contact</a>
+                <a href="contact.html" onclick="toggleMenu()" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-accent hover:bg-indigo-700">Book Now</a>
+            </div>
+        </div>
+    </nav>
+    <div class="flex items-start justify-center p-4">
+        <div class="w-full max-w-lg bg-white shadow-xl rounded-2xl p-8 transition-all duration-300">
+            
+            <header class="text-center mb-10" id="contact">
+                <h1 class="text-3xl font-extrabold text-primary-dark mb-2">Detailed Lesson Booking</h1>
+                <p class="text-gray-500 text-lg">Choose your package and preferred contact method below.</p>
+            </header>
+
+            <div class="mb-10 p-6 bg-gray-50 rounded-xl border border-gray-200" id="pricing">
+                <h2 class="text-xl font-bold text-accent mb-4 border-b pb-2">Our Flexible Pricing</h2>
+                
+                <div class="space-y-3">
+                    
+                    <div class="flex justify-between items-center text-gray-700">
+                        <span class="font-medium">Per Session</span>
+                        <span class="font-semibold text-primary-dark">$30 USD / 42,000 NGN</span>
+                    </div>
+
+                    <div class="flex justify-between items-center text-gray-700">
+                        <span class="font-medium">5 Sessions</span>
+                        <span class="font-semibold text-primary-dark">$140 USD / 196,000 NGN <span class="text-sm text-green-600">(Save $10)</span></span>
+                    </div>
+
+                    <div class="flex justify-between items-center text-gray-700">
+                        <span class="font-medium">10 Sessions</span>
+                        <span class="font-semibold text-primary-dark">$250 USD / 350,000 NGN <span class="text-sm text-green-600">(Save $50)</span></span>
+                    </div>
+
+                    <div class="flex justify-between items-center text-gray-700 bg-yellow-50 p-2 rounded-lg border-l-4 border-yellow-500">
+                        <span class="font-bold">11 Sessions (Bonus Offer!)</span>
+                        <span class="font-bold text-red-600">$250 USD / 350,000 NGN</span>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="text-center bg-blue-50 p-3 rounded-lg">
+                    <p class="text-sm font-semibold text-blue-700">
+                        Group Lessons: <span class="text-lg font-bold">$7 USD / 9,800 NGN</span> per player (minimum 4 players).
+                    </p>
+                </div>
+
+                <p class="mt-4 text-xs text-gray-500 text-center">
+                    * Note: The NGN price is illustrative, using $1 USD = 1400 NGN. Final pricing may vary slightly based on live exchange rates.
+                </p>
+                <p class="mt-1 text-xs text-gray-500 text-center">
+                    ** Kid's Summer Camp fees are separate and updated seasonally.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <button
+                    id="whatsappButton"
+                    onclick="showForm('whatsapp')"
+                    class="flex items-center justify-center p-4 rounded-xl text-white font-semibold text-lg bg-brand-whatsapp hover:bg-green-700 transition duration-200 shadow-md shadow-brand-whatsapp/50 transform hover:scale-[1.02] active:scale-[0.98]"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.55 0-10 4.49-10 10 0 1.95.55 3.82 1.62 5.48l-1.42 5.15 5.34-1.4c1.55.85 3.32 1.3 5.38 1.3 5.55 0 10.04-4.49 10.04-10S17.59 2 12.04 2zm3.33 13.93s-.3.35-.4.45c-.43.53-2.18 2.37-4.14 2.45-1.96.08-3.32-.98-3.4-1.07-.1-.1-.7-.85-.7-1.63 0-.78.4-1.2.6-1.42.2-.21.4-.26.6-.26h.2c.2 0 .5.1.8.4.3.3.6.8.6.85.1.2.2.4 0 .58-.4.4-1.3.8-1.9.95-.5.15-.95.1-1.3-.35-.45-.48-1.4-1.45-1.4-2.8 0-1.35.75-2.06 1-2.3.2-.24.5-.3.7-.3h.4c.2 0 .5.1.7.3.3.3.85 1.15.95 1.45.1.3.1.5 0 .75-.2.2-1.25.9-1.25.9-.2.1-.2.4 0 .6.1.2.5.8.9.9.4.1.8.1 1.1-.1.4-.2.8-1 1.25-1.5.4-.5.9-.9 1.4-1.1.5-.2 1.1-.2 1.6 0 .5.2 1.4.9 1.4 1.7 0 .8-.5 1.4-.7 1.6z"/></svg>
+                    WhatsApp Inquiry
+                </button>
+
+                <button
+                    id="emailButton"
+                    onclick="showForm('email')"
+                    class="flex items-center justify-center p-4 rounded-xl text-white font-semibold text-lg bg-brand-email hover:bg-red-700 transition duration-200 shadow-md shadow-brand-email/50 transform hover:scale-[1.02] active:scale-[0.98]"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3" viewBox="0 0 24 24" fill="currentColor"><path d="M2.003 5.884c.08-.29.28-.56.54-.74 1.15-.79 4.35-3.14 9.46-3.14 5.11 0 8.31 2.35 9.46 3.14.26.18.46.45.54.74.08.3-.02.61-.28.85l-9.72 7.82c-.17.14-.37.21-.57.21-.2 0-.4-.07-.57-.21l-9.72-7.82c-.26-.24-.36-.55-.28-.85zm1.18 2.05L12 16.5l8.82-8.57c.18-.18.28-.42.28-.67 0-.27-.11-.5-.28-.68-.85-.58-3.56-2.52-8.54-2.52-4.98 0-7.69 1.94-8.54 2.52-.17.18-.28.41-.28.68 0 .25.1.49.28.67zM12 18.5l-9.8-7.9c-.1-.08-.2-.14-.3-.18V19c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-8.58c-.1.04-.2.1-.3.18L12 18.5z"/></svg>
+                    Email Inquiry
+                </button>
+            </div>
+
+            <div id="messageBox" class="mt-8 p-4 text-center rounded-lg shadow hidden" role="alert"></div>
+        </div>
+    </div>
+
+    <div id="formModal" class="modal-overlay fixed inset-0 hidden items-center justify-center" onclick="if(event.target.id === 'formModal') closeForm()">
+        <div class="bg-white rounded-xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto transform transition-all duration-300 scale-95 opacity-0">
+            
+            <div class="sticky top-0 p-6 border-b flex justify-between items-center bg-white z-10 rounded-t-xl">
+                <h2 id="modalTitle" class="text-2xl font-bold text-gray-800"></h2>
+                <button onclick="closeForm()" class="text-gray-400 hover:text-gray-600 transition p-2 rounded-full hover:bg-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+
+            <form id="whatsappFormContent" class="p-6 space-y-4 hidden" onsubmit="handleWhatsAppSubmit(event)">
+                <p class="text-sm text-gray-500">All fields marked with an asterisk (<span class="text-red-500">*</span>) are required.</p>
+                
+                <h3 class="font-semibold text-lg pt-2 text-gray-700">1. Personal Information</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="waName" class="block text-sm font-medium text-gray-700">Your Name <span class="text-red-500">*</span></label>
+                        <input type="text" id="waName" required class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent">
+                    </div>
+                    <div>
+                        <label for="waEmail" class="block text-sm font-medium text-gray-700">Email Address <span class="text-red-500">*</span></label>
+                        <input type="email" id="waEmail" required class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="waPhone" class="block text-sm font-medium text-gray-700">Phone Number <span class="text-red-500">*</span></label>
+                        <input type="tel" id="waPhone" required class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent" placeholder="+1234567890">
+                    </div>
+                    <div>
+                        <label for="waAge" class="block text-sm font-medium text-gray-700">Age Category (Kid's Lessons)</label>
+                        <select id="waAge" class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent">
+                            <option value="N/A">N/A (Adult/General)</option>
+                            <option value="5-8">Ages 5-8</option>
+                            <option value="9-12">Ages 9-12</option>
+                            <option value="13-16">Ages 13-16</option>
+                            <option value="17+">Ages 17+</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <h3 class="font-semibold text-lg pt-2 text-gray-700">2. Tennis Details</h3>
+                <div>
+                    <label for="waExperience" class="block text-sm font-medium text-gray-700">Experience Level <span class="text-red-500">*</span></label>
+                    <select id="waExperience" required class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent">
+                        <option value="">Select Level</option>
+                        <option value="Beginner">Beginner (New to tennis)</option>
+                        <option value="Intermediate">Intermediate (Played casually)</option>
+                        <option value="Advanced">Advanced (Competitive/Team play)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="waGoal" class="block text-sm font-medium text-gray-700">Tennis Goal (e.g., fitness, competition, fun)</label>
+                    <textarea id="waGoal" rows="2" class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent" placeholder="I want to learn serving, or, I want to join a local league."></textarea>
+                </div>
+                
+                <h3 class="font-semibold text-lg pt-2 text-gray-700">3. Location and Payment</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="waCountry" class="block text-sm font-medium text-gray-700">Country <span class="text-red-500">*</span></label>
+                        <input type="text" id="waCountry" required class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent">
+                    </div>
+                    <div>
+                        <label for="waLocation" class="block text-sm font-medium text-gray-700">City/Location <span class="text-red-500">*</span></label>
+                        <input type="text" id="waLocation" required class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="waCurrency" class="block text-sm font-medium text-gray-700">Payment Currency <span class="text-red-500">*</span></label>
+                        <select id="waCurrency" required class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent">
+                            <option value="">Select Currency</option>
+                            <option value="USD">USD (US Dollar)</option>
+                            <option value="EUR">EUR (Euro)</option>
+                            <option value="GBP">GBP (Pound Sterling)</option>
+                            <option value="NGN">NGN (Nigerian Naira)</option>
+                            <option value="ZAR">ZAR (South African Rand)</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="waBank" class="block text-sm font-medium text-gray-700">Paying Bank Name <span class="text-red-500">*</span></label>
+                        <input type="text" id="waBank" required class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent">
+                    </div>
+                </div>
+                
+                <button type="submit" class="w-full py-3 px-4 rounded-lg text-white font-semibold bg-brand-whatsapp hover:bg-green-700 transition duration-200 shadow-md">
+                    Send WhatsApp Request
+                </button>
+            </form>
+
+            <form id="emailFormContent" class="p-6 space-y-4 hidden" onsubmit="handleEmailSubmit(event)">
+                <p class="text-sm text-gray-500">All fields marked with an asterisk (<span class="text-red-500">*</span>) are required.</p>
+                
+                <h3 class="font-semibold text-lg pt-2 text-gray-700">1. Personal Information</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="emailName" class="block text-sm font-medium text-gray-700">Your Name <span class="text-red-500">*</span></label>
+                        <input type="text" id="emailName" required class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent">
+                    </div>
+                    <div>
+                        <label for="emailAddr" class="block text-sm font-medium text-gray-700">Email Address <span class="text-red-500">*</span></label>
+                        <input type="email" id="emailAddr" required class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent">
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="emailPhone" class="block text-sm font-medium text-gray-700">Phone Number <span class="text-red-500">*</span></label>
+                        <input type="tel" id="emailPhone" required class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent" placeholder="+1234567890">
+                    </div>
+                    <div>
+                        <label for="emailAge" class="block text-sm font-medium text-gray-700">Age Category (Kid's Lessons)</label>
+                        <select id="emailAge" class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent">
+                            <option value="N/A">N/A (Adult/General)</option>
+                            <option value="5-8">Ages 5-8</option>
+                            <option value="9-12">Ages 9-12</option>
+                            <option value="13-16">Ages 13-16</option>
+                            <option value="17+">Ages 17+</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h3 class="font-semibold text-lg pt-2 text-gray-700">2. Tennis Details</h3>
+                <div>
+                    <label for="emailExperience" class="block text-sm font-medium text-gray-700">Experience Level <span class="text-red-500">*</span></label>
+                    <select id="emailExperience" required class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent">
+                        <option value="">Select Level</option>
+                        <option value="Beginner">Beginner (New to tennis)</option>
+                        <option value="Intermediate">Intermediate (Played casually)</option>
+                        <option value="Advanced">Advanced (Competitive/Team play)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="emailGoal" class="block text-sm font-medium text-gray-700">Tennis Goal (e.g., fitness, competition, fun)</label>
+                    <textarea id="emailGoal" rows="2" class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent" placeholder="I want to learn serving, or, I want to join a local league."></textarea>
+                </div>
+                
+                <h3 class="font-semibold text-lg pt-2 text-gray-700">3. Location and Payment</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="emailCountry" class="block text-sm font-medium text-gray-700">Country <span class="text-red-500">*</span></label>
+                        <input type="text" id="emailCountry" required class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent">
+                    </div>
+                    <div>
+                        <label for="emailLocation" class="block text-sm font-medium text-gray-700">City/Location <span class="text-red-500">*</span></label>
+                        <input type="text" id="emailLocation" required class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label for="emailCurrency" class="block text-sm font-medium text-gray-700">Payment Currency <span class="text-red-500">*</span></label>
+                        <select id="emailCurrency" required class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent">
+                            <option value="">Select Currency</option>
+                            <option value="USD">USD (US Dollar)</option>
+                            <option value="EUR">EUR (Euro)</option>
+                            <option value="GBP">GBP (Pound Sterling)</option>
+                            <option value="NGN">NGN (Nigerian Naira)</option>
+                            <option value="ZAR">ZAR (South African Rand)</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="emailBank" class="block text-sm font-medium text-gray-700">Paying Bank Name <span class="text-red-500">*</span></label>
+                        <input type="text" id="emailBank" required class="form-input mt-1 block w-full rounded-lg border-gray-300 shadow-sm p-3 focus:ring-accent focus:border-accent">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full py-3 px-4 rounded-lg text-white font-semibold bg-brand-email hover:bg-red-700 transition duration-200 shadow-md">
+                    Send Email Request
+                </button>
+            </form>
+        </div>
     </div>
 
     <script>
-        // ----------------------------------------------------------------------
-        // *** 1. ACTION REQUIRED: PUT YOUR EMAIL ADDRESS HERE ***
-        // ----------------------------------------------------------------------
-        const recipientEmail = "your.coaching.email@example.com"; 
+        // --- CONFIGURATION: INPUT YOUR CONTACT DETAILS HERE ---
+        // IMPORTANT: Replace the placeholder values with your actual number and email.
+        const YOUR_WHATSAPP_NUMBER = "+2349011211609"; // Example: +27712345678 (Include the '+' and country code)
+        const YOUR_EMAIL_ADDRESS = "kenzdyreal@gmail.com"; // Example: bookings@mysite.com
+        // ----------------------------------------------------
 
-        // ----------------------------------------------------------------------
-        // *** 2. ACTION REQUIRED: PUT YOUR WHATSAPP NUMBER HERE (with country code, e.g., +18005551234) ***
-        // ----------------------------------------------------------------------
-        const whatsappNumber = "+18005551234";
-
-        /**
-         * Shows the terms modal (simulated via message box for simplicity).
-         */
-        function showTerms(event) {
-            event.preventDefault(); // Stop the '#' link from scrolling
-            const messageBox = document.getElementById('messageBox');
-            document.getElementById('messageTitle').textContent = "Payment & Cancellation Policy";
-            document.getElementById('messageBody').innerHTML = 
-                'Payment is due within 24 hours of receiving the invoice to secure the slot. ' + 
-                'Cancellations made 48 hours in advance receive a full refund. Less than 48 hours forfeits the payment.';
-            messageBox.classList.remove('hidden');
-        }
+        const formModal = document.getElementById('formModal');
+        const modalContent = formModal.querySelector('div');
+        const modalTitle = document.getElementById('modalTitle');
+        const whatsappForm = document.getElementById('whatsappFormContent');
+        const emailForm = document.getElementById('emailFormContent');
+        const messageBox = document.getElementById('messageBox');
+        
+        // Navbar elements
+        const menuButton = document.getElementById('menuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuIcon = document.getElementById('menuIcon');
+        const closeIcon = document.getElementById('closeIcon');
 
         /**
-         * Handles the submission for the Mailto (Email) link.
+         * Toggles the visibility of the mobile navigation menu.
          */
-        function handleSubmission(event) {
-            const form = document.getElementById('bookingForm');
-            // Check form validity before proceeding
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return; 
-            }
-
-            event.preventDefault();
-
-            // Get all booking values
-            const name = document.getElementById('name').value;
-            const clientEmail = document.getElementById('email').value;
-            const service = document.getElementById('service').value;
-            const preferredDate = document.getElementById('preferredDate').value;
-            const preferredTime = document.getElementById('preferredTime').value;
-            const timeZone = document.getElementById('timeZone').value;
-            const clientCountry = document.getElementById('clientCountry').value;
-            const paymentCurrency = document.getElementById('paymentCurrency').value;
-            const agreed = document.getElementById('agreeTerms').checked ? "YES" : "NO (FORM VALIDATION FAILED)";
-
-            // Define Subject
-            const subject = encodeURIComponent(`HIGH PRIORITY BOOKING REQUEST: ${name} - ${service}`);
-
-            // Format date and time for readability
-            const formattedDate = new Date(preferredDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        function toggleMenu() {
+            const isHidden = mobileMenu.classList.contains('hidden');
             
-            // Construct the Email Body
-            const bodyContent = 
-                `Hello Apex Team,\n\n` +
-                `I am submitting a high-priority booking request with the following details:\n\n` +
-                `--- Booking Details ---\n` +
-                `Client Name: ${name}\n` +
-                `Client Email: ${clientEmail}\n` +
-                `Requested Service: ${service}\n\n` +
-                `Preferred Date: ${formattedDate}\n` +
-                `Preferred Time: ${preferredTime}\n` +
-                `Client Time Zone: ${timeZone}\n\n` +
-                `Client Country: ${clientCountry}\n` +
-                `Preferred Invoice Currency: ${paymentCurrency}\n\n` +
-                `Agreement to Terms: ${agreed}\n\n` +
-                `Could you please confirm the availability and send the personalized secure payment link right away?\n` +
-                `Thank you, ${name}`;
-
-            const body = encodeURIComponent(bodyContent);
-
-            // Create the final mailto link
-            const mailtoLink = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
-
-            // Display a message box and open the email client
-            const messageBox = document.getElementById('messageBox');
-            document.getElementById('messageTitle').textContent = "Email Client Opening...";
-            document.getElementById('messageBody').textContent = "We've compiled your detailed booking request. Please send the pre-filled email from your client!";
-            messageBox.classList.remove('hidden');
-
-            // Open the mailto link
-            window.location.href = mailtoLink;
+            if (isHidden) {
+                // Show menu
+                mobileMenu.classList.remove('hidden');
+                // Toggle icons (Hamburger to X)
+                menuIcon.classList.add('hidden');
+                closeIcon.classList.remove('hidden');
+            } else {
+                // Hide menu
+                mobileMenu.classList.add('hidden');
+                // Toggle icons (X to Hamburger)
+                menuIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+            }
         }
 
 
         /**
-         * Handles the submission for the WhatsApp chat link.
+         * Clears all form fields.
          */
-        function handleWhatsAppSubmission(event) {
-            const form = document.getElementById('bookingForm');
-            // Check form validity before proceeding
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return; 
+        function clearForm(formElement) {
+            formElement.reset();
+        }
+
+        /**
+         * Displays the selected contact form modal.
+         */
+        function showForm(type) {
+            whatsappForm.classList.add('hidden');
+            emailForm.classList.add('hidden');
+            
+            clearForm(whatsappForm);
+            clearForm(emailForm);
+            
+            if (type === 'whatsapp') {
+                modalTitle.textContent = 'Detailed WhatsApp Inquiry';
+                whatsappForm.classList.remove('hidden');
+            } else if (type === 'email') {
+                modalTitle.textContent = 'Detailed Email Inquiry';
+                emailForm.classList.remove('hidden');
             }
 
+            // Show modal with animation
+            formModal.classList.remove('hidden');
+            formModal.classList.add('flex', 'opacity-100');
+            
+            setTimeout(() => {
+                // Ensure form scrolls to top on open
+                modalContent.scrollTop = 0;
+                modalContent.classList.remove('scale-95', 'opacity-0');
+                modalContent.classList.add('scale-100', 'opacity-100');
+            }, 10);
+        }
+
+        /**
+         * Closes the form modal.
+         */
+        function closeForm() {
+            modalContent.classList.remove('scale-100', 'opacity-100');
+            modalContent.classList.add('scale-95', 'opacity-0');
+            
+            setTimeout(() => {
+                formModal.classList.remove('flex', 'opacity-100');
+                formModal.classList.add('hidden');
+            }, 300);
+        }
+
+        /**
+         * Shows a temporary success or error message.
+         */
+        function showMessage(message, type) {
+            messageBox.textContent = message;
+            messageBox.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+
+            if (type === 'success') {
+                messageBox.classList.add('bg-green-100', 'text-green-800');
+            } else {
+                messageBox.classList.add('bg-red-100', 'text-red-800');
+            }
+            messageBox.classList.remove('hidden');
+
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, 5000);
+        }
+
+        /**
+         * Creates the formatted message body from form data.
+         */
+        function createMessageBody(type, name, email, phone, age, experience, goal, country, location, currency, bank) {
+            // Determine the phone field name based on the form type
+            const phoneLabel = type === 'whatsapp' ? 'WhatsApp Number' : 'Phone Number';
+
+            let message = `--- Detailed Lesson Inquiry ---\n\n`;
+            message += `1. Personal Information:\n`;
+            message += `- Name: ${name}\n`;
+            message += `- Email: ${email}\n`;
+            message += `- ${phoneLabel}: ${phone}\n`;
+            message += `- Age Category (Kids): ${age}\n\n`;
+            
+            message += `2. Tennis Details:\n`;
+            message += `- Experience Level: ${experience}\n`;
+            message += `- Goal: ${goal}\n\n`;
+            
+            message += `3. Location and Payment:\n`;
+            message += `- Country: ${country}\n`;
+            message += `- City/Location: ${location}\n`;
+            message += `- Preferred Currency: ${currency}\n`;
+            message += `- Paying Bank: ${bank}\n\n`;
+            message += `-------------------------------\n`;
+            message += `Please confirm availability and next steps. Thank you.`;
+            
+            return message;
+        }
+
+        /**
+         * Handles the WhatsApp form submission (opens wa.me link).
+         */
+        function handleWhatsAppSubmit(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('waName').value;
+            const email = document.getElementById('waEmail').value;
+            const phone = document.getElementById('waPhone').value;
+            const age = document.getElementById('waAge').value;
+            const experience = document.getElementById('waExperience').value;
+            const goal = document.getElementById('waGoal').value || 'Not Specified';
+            const country = document.getElementById('waCountry').value;
+            const location = document.getElementById('waLocation').value;
+            const currency = document.getElementById('waCurrency').value;
+            const bank = document.getElementById('waBank').value;
+            
+            if (!name || !email || !phone || !experience || !country || !location || !currency || !bank) {
+                showMessage("Please fill out all required fields marked with *.", 'error');
+                return;
+            }
+
+            const message = createMessageBody('whatsapp', name, email, phone, age, experience, goal, country, location, currency, bank);
+
+            // Encode the message and construct the WhatsApp link
+            const whatsappLink = `https://wa.me/${YOUR_WHATSAPP_NUMBER.replace(/\+/g, '')}?text=${encodeURIComponent(message)}`;
+
+            closeForm();
+            showMessage(`Thank you, ${name}! Redirecting you to WhatsApp now to send the pre-filled message...`, 'success');
+            
+            // Use a small delay for the message to display before redirecting
+            setTimeout(() => {
+                window.open(whatsappLink, '_blank');
+            }, 500);
+        }
+
+        /**
+         * Handles the Email form submission (opens mailto link).
+         */
+        function handleEmailSubmit(event) {
             event.preventDefault();
 
-            // Get required values
-            const name = document.getElementById('name').value;
-            const service = document.getElementById('service').value;
-            const preferredDate = document.getElementById('preferredDate').value;
-            const preferredTime = document.getElementById('preferredTime').value;
-            const timeZone = document.getElementById('timeZone').value;
-            const clientCountry = document.getElementById('clientCountry').value;
-            const paymentCurrency = document.getElementById('paymentCurrency').value;
+            const name = document.getElementById('emailName').value;
+            const email = document.getElementById('emailAddr').value;
+            const phone = document.getElementById('emailPhone').value;
+            const age = document.getElementById('emailAge').value;
+            const experience = document.getElementById('emailExperience').value;
+            const goal = document.getElementById('emailGoal').value || 'Not Specified';
+            const country = document.getElementById('emailCountry').value;
+            const location = document.getElementById('emailLocation').value;
+            const currency = document.getElementById('emailCurrency').value;
+            const bank = document.getElementById('emailBank').value;
 
-            // Format date for WhatsApp message
-            const formattedDate = new Date(preferredDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            if (!name || !email || !phone || !experience || !country || !location || !currency || !bank) {
+                showMessage("Please fill out all required fields marked with *.", 'error');
+                return;
+            }
 
-            // Construct a pre-filled WhatsApp message
-            const whatsappMessage = 
-                `Hi Apex Coaching, I'm ${name} and I'm requesting to book the "${service}". ` + 
-                `My preferred slot is on ${formattedDate} at ${preferredTime} (${timeZone}). ` + 
-                `I am located in ${
+            const message = createMessageBody('email', name, email, phone, age, experience, goal, country, location, currency, bank);
+
+            // Subject for the email
+            const subject = encodeURIComponent(`New Lesson Booking Inquiry from ${name}`);
+
+            // Construct the mailto link
+            const mailtoLink = `mailto:${YOUR_EMAIL_ADDRESS}?subject=${subject}&body=${encodeURIComponent(message)}`;
+
+            closeForm();
+            showMessage(`Thank you, ${name}! Opening your email client to send the pre-filled request...`, 'success');
+
+            // Use a small delay for the message to display before triggering mailto
+            setTimeout(() => {
+                window.location.href = mailtoLink;
+            }, 500);
+        }
+    </script>
+</body>
+</html>

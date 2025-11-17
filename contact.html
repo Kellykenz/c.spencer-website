@@ -12,10 +12,10 @@
             theme: {
                 extend: {
                     colors: {
-                        // Primary color (Dark Blue)
-                        'dark-blue': '#1e40af', 
-                        // New Accent color (Navy Blue)
-                        'navy-accent': '#102A43', 
+                        // Primary color (Updated to Very Dark Midnight Blue)
+                        'dark-blue': '#091A2A',
+                        // Accent color (Updated for consistency)
+                        'navy-accent': '#091A2A',
                         // White/Off-White color
                         'off-white': '#f9fafb',
                     },
@@ -37,8 +37,8 @@
 </head>
 <body class="bg-off-white font-sans text-gray-800">
 
-    <!-- Navbar: Dark Blue Background -->
-    <header class="bg-dark-blue shadow-lg sticky top-0 z-50">
+    <!-- Navbar: Very Dark Navy Background -->
+    <header class="bg-navy-accent shadow-lg sticky top-0 z-50">
         <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
                 <!-- Logo/Brand -->
@@ -50,17 +50,18 @@
 
                 <!-- Desktop Navigation Links -->
                 <div class="hidden md:flex space-x-8">
-                    <a href="index.html" class="text-white hover:text-navy-accent py-2 px-3 rounded-md text-sm font-medium transition duration-150">Home</a>
-                    <a href="generic.html" class="text-white hover:text-navy-accent py-2 px-3 rounded-md text-sm font-medium transition duration-150">About</a>
-                    <a href="elements.html" class="text-white hover:text-navy-accent py-2 px-3 rounded-md text-sm font-medium transition duration-150">Services</a>
-                    <a href="index.html#three" class="text-white hover:text-navy-accent py-2 px-3 rounded-md text-sm font-medium transition duration-150">Testimonials</a>
-                    <a href="elements.html" class="text-white hover:text-navy-accent py-2 px-3 rounded-md text-sm font-medium transition duration-150">Book a session</a>
-                    <a href="contact.html" class="bg-navy-accent text-white py-2 px-4 rounded-lg text-sm font-medium shadow-md hover:bg-gray-800 transition duration-150">Contact</a>
+                    <a href="index.html" class="text-white hover:text-gray-300 py-2 px-3 rounded-md text-sm font-medium transition duration-150">Home</a>
+                    <a href="generic.html" class="text-white hover:text-gray-300 py-2 px-3 rounded-md text-sm font-medium transition duration-150">About</a>
+                    <a href="elements.html" class="text-white hover:text-gray-300 py-2 px-3 rounded-md text-sm font-medium transition duration-150">Services</a>
+                    <a href="index.html#three" class="text-white hover:text-gray-300 py-2 px-3 rounded-md text-sm font-medium transition duration-150">Testimonials</a>
+                    <a href="elements.html" class="text-white hover:text-gray-300 py-2 px-3 rounded-md text-sm font-medium transition duration-150">Book a session</a>
+                    <!-- Contact button uses a contrasting dark shade for visibility, hover is slightly darker -->
+                    <a href="contact.html" class="bg-gray-700 text-white py-2 px-4 rounded-lg text-sm font-medium shadow-md hover:bg-gray-800 transition duration-150">Contact</a>
                 </div>
 
                 <!-- Mobile Menu Button (Hamburger) -->
                 <div class="md:hidden">
-                    <button id="menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-off-white hover:bg-navy-accent focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition duration-150" aria-controls="mobile-menu" aria-expanded="false">
+                    <button id="menu-button" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-off-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white transition duration-150" aria-controls="mobile-menu" aria-expanded="false">
                         <!-- Icon when menu is closed. -->
                         <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -75,11 +76,11 @@
             <!-- Mobile Menu, toggle based on menu state. -->
             <div class="md:hidden transition-height max-h-0" id="mobile-menu">
                 <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                    <a href="index.html" class="text-white hover:bg-navy-accent block px-3 py-2 rounded-md text-base font-medium transition duration-150">Home</a>
-                    <a href="generic.html" class="text-white hover:bg-navy-accent block px-3 py-2 rounded-md text-base font-medium transition duration-150">Services</a>
-                    <a href="index.html#three" class="text-white hover:bg-navy-accent block px-3 py-2 rounded-md text-base font-medium transition duration-150">Testimonials</a>
-                    <a href="contact.html" class="text-white hover:bg-navy-accent block px-3 py-2 rounded-md text-base font-medium transition duration-150">Contact</a>
-                    <a href="BOOK.html" class="text-white hover:bg-navy-accent block px-3 py-2 rounded-md text-base font-medium transition duration-150">Book</a>
+                    <a href="index.html" class="text-white hover:bg-gray-800 block px-3 py-2 rounded-md text-base font-medium transition duration-150">Home</a>
+                    <a href="generic.html" class="text-white hover:bg-gray-800 block px-3 py-2 rounded-md text-base font-medium transition duration-150">Services</a>
+                    <a href="index.html#three" class="text-white hover:bg-gray-800 block px-3 py-2 rounded-md text-base font-medium transition duration-150">Testimonials</a>
+                    <a href="contact.html" class="text-white hover:bg-gray-800 block px-3 py-2 rounded-md text-base font-medium transition duration-150">Contact</a>
+                    <a href="BOOK.html" class="text-white hover:bg-gray-800 block px-3 py-2 rounded-md text-base font-medium transition duration-150">Book</a>
                 </div>
             </div>
         </nav>
@@ -89,7 +90,8 @@
     <main class="py-16 sm:py-24">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h1 class="text-5xl font-extrabold text-dark-blue mb-4">Get In Touch</h1>
+                <!-- Title uses deep navy -->
+                <h1 class="text-5xl font-extrabold text-navy-accent mb-4">Get In Touch</h1>
                 <p class="text-xl text-gray-500">Ready to transform your life? Connect instantly via WhatsApp.</p>
             </div>
 
@@ -97,7 +99,8 @@
                 
                 <!-- Contact Information Card -->
                 <div class="lg:col-span-1 bg-white p-8 rounded-xl shadow-2xl border-t-4 border-navy-accent">
-                    <h2 class="text-2xl font-bold text-dark-blue mb-4">Our Details</h2>
+                    <!-- Title uses deep navy -->
+                    <h2 class="text-2xl font-bold text-navy-accent mb-4">Our Details</h2>
                     <div class="space-y-6">
                         <!-- Email -->
                         <div class="flex items-start space-x-3">
@@ -127,15 +130,16 @@
                 </div>
 
                 <!-- WhatsApp Contact Section (Replaced Form) -->
-                <div class="lg:col-span-2 bg-white p-8 rounded-xl shadow-2xl border-t-4 border-dark-blue flex flex-col items-center text-center">
-                    <h2 class="text-3xl font-bold text-dark-blue mb-4">Chat With Me Now</h2>
+                <div class="lg:col-span-2 bg-white p-8 rounded-xl shadow-2xl border-t-4 border-navy-accent flex flex-col items-center text-center">
+                    <!-- Title uses deep navy -->
+                    <h2 class="text-3xl font-bold text-navy-accent mb-4">Chat With Me Now</h2>
                     <p class="text-lg text-gray-600 mb-10 max-w-lg">Click the button below to start an instant, private conversation on WhatsApp. I look forward to hearing about your goals!</p>
                     
-                    <!-- WhatsApp Link Button -->
+                    <!-- WhatsApp Link Button (uses deep navy) -->
                     <!-- NOTE TO USER: REPLACE '15551234567' with your full WhatsApp number (including country code, without + or spaces). -->
                     <a href="https://wa.me/+2348063430037?text=Hello%20Coach%Spencer,%20I%20saw%20your%20website%20and%20want%20to%20know%20more%20about%20your%20coaching%20services."
                         target="_blank"
-                        class="w-full sm:w-2/3 flex items-center justify-center py-4 px-6 border border-transparent rounded-lg shadow-lg text-xl font-bold text-white bg-dark-blue hover:bg-navy-accent focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-navy-accent transition duration-300 transform hover:scale-[1.02]">
+                        class="w-full sm:w-2/3 flex items-center justify-center py-4 px-6 border border-transparent rounded-lg shadow-lg text-xl font-bold text-white bg-navy-accent hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-navy-accent transition duration-300 transform hover:scale-[1.02]">
                         <!-- WhatsApp Icon (Inline SVG) -->
                         <svg class="w-7 h-7 mr-3" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path d="M12.031 3.179c-4.142 0-7.5 3.357-7.5 7.5 0 1.246.331 2.453.953 3.524l-.999 3.648 3.738-.985c1.002.551 2.13.857 3.791.857h.018c4.142 0 7.5-3.357 7.5-7.5s-3.358-7.5-7.5-7.5zm4.846 10.368c-.244-.121-.295-.195-.444-.269s-.325-.18-.499-.214c-.173-.034-.374-.017-.574-.017-.201 0-.444.051-.689.344s-.939 1.141-1.14 1.373c-.201.233-.401.258-.744.077-.344-.18-.466-.144-1.29-.444-.823-.3-1.956-.755-2.748-2.261-.794-1.506-.08-2.33.568-2.977.147-.147.34-.195.452-.403s.061-.41-.01-.584c-.071-.173-.646-1.558-.889-2.128-.244-.569-.49-.494-.689-.494-.173 0-.374-.017-.574-.017-.201 0-.528.067-.808.344s-1.092 1.077-1.092 2.628c0 1.55 1.114 3.033 1.275 3.266 0 0 1.932 2.983 4.71 4.298 2.778 1.314 2.778 1.159 3.28 1.133.502-.025 1.353-.551 1.547-1.045s.201-.892-.044-1.124c-.244-.233-.509-.344-.753-.466z"/>
@@ -147,15 +151,16 @@
         </div>
     </main>
 
-    <!-- Footer: Dark Blue Background -->
-    <footer class="bg-dark-blue mt-12 py-8">
+    <!-- Footer: Very Dark Navy Background -->
+    <footer class="bg-navy-accent mt-12 py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <p class="text-white text-sm">&copy; <span id="current-year"></span> COACH SPENCER. All rights reserved.</p>
             <div class="flex justify-center space-x-4 mt-3">
-                <a href="#" class="text-white hover:text-navy-accent transition duration-150">Privacy Policy</a>
+                <a href="#" class="text-white hover:text-gray-400 transition duration-150">Privacy Policy</a>
                 <span class="text-white">|</span>
-                <a href="#" class="text-white hover:text-navy-accent transition duration-150">Terms of Service</a>
-                <a href="#"> Designed By Kenzdy </a>
+                <a href="#" class="text-white hover:text-gray-400 transition duration-150">Terms of Service</a>
+                <span class="text-white">|</span>
+                <a href="#" class="text-white hover:text-gray-400 transition duration-150">Designed By:<span><a href="#" style="text-decoration: none; color: white">Kenzdy</a></span></a>
             </div>
         </div>
     </footer>
@@ -194,4 +199,3 @@
     </script>
 </body>
 </html>
-

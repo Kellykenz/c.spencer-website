@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <title>Learn More - Clarity Coaching</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide icons (for clean, professional icons) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+	<link rel="stylesheet" href="assets/css/main.css" />
+
+    <style>
+        /* Custom Font Setup (Inter is used by default in Tailwind, making it clean) */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f7f9;
+            /* Off-white background */
+        }
+
+        /* Define the custom Navy Blue color for easy reuse in Tailwind */
+        /* Navy Blue: #001f54 */
+        .color-primary {
+            background-color: #001f54;
+        }
+
+        .text-primary {
+            color: #001f54;
+        }
+
+        .border-primary {
+            border-color: #001f54;
+        }
+    </style>
+</head>
+
+<body class="antialiased text-gray-800">
+
+    <div id="app" class="min-h-screen">
+
+        <!-- Navigation/Header placeholder -->
+        <header class="bg-white shadow-sm sticky top-0 z-10">
+            <div class="max-w-7xl mx-auto px-4 py-4 sm:px-6 lg:px-8 flex justify-between items-center">
+                <div class="text-2xl font-bold text-primary">C.SPENCER</div>
+                <nav class="hidden sm:block">
+                    <a href="index.html" class="ml-6 text-gray-600 hover:text-primary transition duration-150">Home</a>
+                    <a href="learn.html" class="ml-6 font-semibold text-primary border-b-2 border-primary pb-1">Learn
+                        More</a>
+                    <a href="elements.html"
+                        class="ml-6 text-gray-600 hover:text-primary transition duration-150">Services</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- 1. Hero Section -->
+        <section class="color-primary text-white py-16 sm:py-24 rounded-b-2xl shadow-xl">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="text-4xl sm:text-6xl font-extrabold mb-4 leading-tight">
+                    Your Vision. <br class="sm:hidden" /> Our Strategy.
+                </h1>
+                <p class="text-lg sm:text-xl max-w-3xl mx-auto opacity-90 mb-8" style="border:none;">
+                    For quicker communciation, click on the the <a href="BOOK.html"><span style="font-weight: 100; border: none; text-decoration: none; list-style: none;">Book A Session</span> Button to secure your amazing space.
+                </p>
+
+                <a
+                        href="BOOK.html" target="_blank">
+                <button
+                    class="bg-white text-primary px-8 py-3 rounded-xl font-semibold shadow-lg hover:bg-gray-100 transition duration-300 transform hover:scale-[1.02]">
+                        Book A Session
+                    
+                </button>
+                </a>
+            </div>
+        </section>
+
+        <!-- 2. Our Mission/Philosophy -->
+        <section class="py-16 sm:py-24">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white p-8 sm:p-12 rounded-2xl shadow-lg border-t-4 border-primary">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-6 text-center text-primary" style="font-size: 25px;">
+                        My Coaching Philosophy
+                    </h2>
+                    <p class="text-lg leading-relaxed text-gray-600 mb-6">
+                        At C.Spencer Tennis Pro Concepts, I believe every player - regardless of age or experience -
+                        carries a spark of greatness. My approach is built on - Personalized training tailored to each
+                        players' strengths and pace.
+                        - Fun, engaging lessons that make learning exciting for kids and adults alike - Strong focus on
+                        fundamentals, discipline, and mindset - the foundation of champions. Whether you're picking up a
+                        racket for the first time
+                        or training to compete, my goal is to help you unlock your potential and fall in love with the
+                        process of growth. - <i>Breading future champions</i>
+                    </p>
+                    <div class="flex justify-center items-center mt-8">
+                        <i data-lucide="sparkles" class="w-8 h-8 text-primary mr-2"></i>
+                        <span class="font-medium text-primary text-xl">Driven by Purpose, Focused on Results.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Our 3-Step Approach (Responsive Feature Grid) -->
+        <section class="py-16 bg-gray-50">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="text-3xl font-bold text-center mb-12 text-primary" style="font-size: 25px;">
+                    How We Achieve Transformational Change
+                </h2>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Step 1: Discover -->
+                    <div
+                        class="bg-white p-8 rounded-xl shadow-lg border-t-2 border-primary hover:shadow-xl transition duration-300">
+                        <i data-lucide="map-pin" class="w-10 h-10 text-primary mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-3 text-primary" style="font-size: 18px;" >Base Of Operation</h3>
+                        <p class="text-gray-600" style="font-size: 13px;">
+                            Training sessions hold at Nicon Luxury Hotel, Abuja, With options for private, group, and
+                            beginner programs.
+                        </p>
+                    </div>
+
+                    <!-- Step 2: Strategize -->
+                    <div
+                        class="bg-white p-8 rounded-xl shadow-lg border-t-2 border-primary hover:shadow-xl transition duration-300">
+                        <i data-lucide="target" class="w-10 h-10 text-primary mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-3 text-primary" style="font-size: 18px;">A Personal Journey Of Growth</h3>
+                        <p class="text-gray-600" style="font-size: 13px;">
+                            Starting C.SPENCER TENNIS PRO CONCEPTs was not just about coaching - it was about giving
+                            back.
+                            There were times the dream felt too big or the path too tough, but each challenge became a
+                            reminder that true champions are built through perseverance.
+                        </p>
+                    </div>
+
+                    <!-- Step 3: Accelerate -->
+                    <div
+                        class="bg-white p-8 rounded-xl shadow-lg border-t-2 border-primary hover:shadow-xl transition duration-300">
+                        <i data-lucide="zap" class="w-10 h-10 text-primary mb-4"></i>
+                        <h3 class="text-xl font-semibold mb-3 text-primary" style="font-size: 18px;">The Spirit Behind The Brand</h3>
+                        <p class="text-gray-600" style="font-size: 13px;">
+                        C.SPENCER TENNIS PRO CONCEPTs stands as a symbol of excellence, discipline, ahd faith.
+                        We're more than a tennis academy -- we're a commnunity where future champions are bred with skill, purpose, and heart
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Meet the Coach -->
+        <section class="py-16 sm:py-24">
+            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white p-8 sm:p-12 rounded-2xl shadow-xl">
+                    <h2 class="text-3xl sm:text-4xl font-bold mb-10 text-center text-primary" style="font-size: 25px;">
+                        Meet Comfort Spencer, Your Coach
+                    </h2>
+
+                    <div class="md:flex md:space-x-10 items-center">
+                        <!-- Coach Image Placeholder (Mobile: stacked, Desktop: side-by-side) -->
+                        <div class="w-full md:w-1/3 mb-6 md:mb-0 flex-shrink-0">
+                            <img src="images/aboutpro.jpeg" alt="Portrait of Coach Alex Vance"
+                                class="w-48 h-48 mx-auto md:w-full md:h-auto rounded-full object-cover shadow-lg border-4 border-gray-100">
+                        </div>
+
+                        <!-- Coach Bio -->
+                        <div class="w-full md:w-2/3">
+                            <p class="text-lg leading-relaxed text-gray-700">
+                                I'm Coach Spencer, founder of C.Spencer Tennis Pro Concepts - a passionate tennis coach,
+                                national player,
+                                and certified PTR & ITF professional dedicated to shaping the next generation of tennis
+                                champions.
+                            </p>
+                            <p class="text-lg leading-relaxed text-gray-700 mt-4">
+                                My tennis journey began long before I became a coach - as a young girl with big dreams,
+                                a racket, and relentless determination. From those early days on court to representing
+                                Nigeria at International tournaments, tennis has always been more than a sport to me;
+                                it's been a calling.
+                            </p>
+
+                            <p class="text-lg leading-relaxed text-gray-700 mt-4">
+                                Over the years, I've had the privilege of transforming that passion into purpose -
+                                coaching kids, adults,
+                                and aspiring professionals to develop not just skills, but the mindset of winners. -
+                                <i><span style="font-size: 14px; font-weight: 00;">BREADING FUTURE CHAMPS</span></i>
+                            </p>
+                            <div class="mt-6 flex flex-wrap gap-4">
+                                <span class="text-sm font-medium text-primary bg-blue-100 px-3 py-1 rounded-full">ITF & PTR
+                                    Certified</span>
+                                <span class="text-sm font-medium text-primary bg-blue-100 px-3 py-1 rounded-full">5+
+                                    Years Experience</span>
+                                <span
+                                    class="text-sm font-medium text-primary bg-blue-100 px-3 py-1 rounded-full">Organizational
+                                    Psychology</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 5. Final CTA -->
+        <section class="py-16 color-primary">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-4">
+                    Ready to Define Your Next Chapter?
+                </h2>
+                <p class="text-xl mb-8 opacity-90">
+                    Your first step toward clarity starts with a conversation. Let's explore your biggest challenges and
+                    most ambitious aspirations.
+                </p>
+                <button
+                    class="bg-white text-primary px-10 py-4 rounded-xl font-extrabold text-lg shadow-xl hover:bg-gray-100 transition duration-300 transform hover:scale-[1.05] ring-2 ring-white">
+                    <a href="BOOK.html" style="list-style: none; text-decoration: none; border:none;">
+                        Start Your Journey Today</a>
+                </button>
+
+                <ul class="icons" style="margin-top: 30px;">
+				<li><a href="https://youtube.com/@anastasiaspencer585" target="_blank" class="icon brands fa-youtube"><span class="label">youtube</span></a></li>
+				<li><a href="https://facebook.com/spencercomfort" target="_blank" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+				<li><a href="https://instagram.com/commy_spenz" target="_blank" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+				<li><a href="https://tiktok.com/@comfort_spencer" target="_blank"   class="icon brands fa-tiktok"><span class="label">Tiktok</span></a></li>
+				<li><a href="mailto:commyspencer@gmail.com" target="_blank"  class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+			</ul>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-gray-100 text-gray-600 py-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
+                &copy; 2025 COACH SPENCER. All Rights Reserved.
+                <li><a href="FAQ.html">FAQ</a></li>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Script to render Lucide icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>
